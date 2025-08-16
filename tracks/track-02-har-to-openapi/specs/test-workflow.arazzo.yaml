@@ -1,0 +1,93 @@
+# test-workflow.arazzo.yaml
+arazzo: 1.0.0
+info:
+  title: Test Daft.ie API Workflows
+  description: Individual workflows for testing each Daft.ie API operation
+  version: 1.0.0
+
+workflows:
+  # Workflow 1: Search Property Listings
+  - workflowId: searchPropertyListingsWorkflow
+    description: Test searching for property listings with filter criteria
+    inputs:
+      type: object
+      properties:
+        mediaSizes:
+          type: string
+          description: Desired image sizes for listing media
+          default: "size720x480"
+    steps:
+      - stepId: searchListings
+        description: Search for property listings
+        operationRef: 'openapi.yaml#/operations/searchPropertyListings'
+        parameters:
+          mediaSizes: $inputs.mediaSizes
+
+  # Workflow 2: Get Property Details
+  - workflowId: getPropertyDetailsWorkflow
+    description: Test retrieving detailed information for a specific property
+    inputs:
+      type: object
+      properties:
+        buildId:
+          type: string
+          description: Next.js build ID
+          default: "r6FgZXTa2BqUvCvw0HNkI"
+        propertyId:
+          type: string
+          description: Unique property identifier
+          default: "6170347"
+        address:
+          type: string
+          description: URL-friendly address slug
+          default: "semi-detached-house-15-cherbury-park-road-lucan-co-dublin"
+    steps:
+      - stepId: getDetails
+        description: Get property details
+        operationRef: 'openapi.yaml#/operations/getPropertyDetails'
+        parameters:
+          buildId: $inputs.buildId
+          id: $inputs.propertyId
+          address: $inputs.address
+
+  # Workflow 3: Get Search Filters
+  - workflowId: getSearchFiltersWorkflow
+    description: Test retrieving available filter options for a search category
+    inputs:
+      type: object
+      properties:
+        searchType:
+          type: string
+          description: Search category type
+          default: "residential-sold"
+    steps:
+      - stepId: getFilters
+        description: Get available search filters
+        operationRef: 'openapi.yaml#/operations/getSearchFilters'
+        parameters:
+          searchType: $inputs.searchType
+
+  # Workflow 4: Get Autocomplete Suggestions
+  - workflowId: getAutocompleteSuggestionsWorkflow
+    description: Test location and keyword autocomplete suggestions
+    inputs:
+      type: object
+      properties:
+        searchQuery:
+          type: string
+          description: Partial search query for autocomplete
+          default: "lucan"
+    steps:
+      - stepId: getSuggestions
+        description: Get autocomplete suggestions
+        operationRef: 'openapi.yaml#/operations/getAutocompleteSuggestions'
+        requestBody:
+          query: $inputs.searchQuery
+
+  # Workflow 5: Check User Session
+  - workflowId: checkUserSessionWorkflow
+    description: Test checking user authentication status
+    steps:
+      - stepId: checkSession
+        description: Check if user is logged in
+        operationRef: 'openapi.yaml#/operations/checkUserSession'
