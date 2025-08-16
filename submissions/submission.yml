@@ -1,0 +1,93 @@
+name: Project Submission
+description: Submit your hackathon contribution for Jentic x Give(a)Go Summer Hackathon 2025
+title: "[SUBMISSION] YuWei Lin - Standard Agent Discord Bot"
+labels: ["submission", "hackathon-2025"]
+body:
+  team: "YuWei Lin"
+  discord_handle: "yuwei_0610"
+  track: "Track 01 - Standard Agent (Discord) [3 points]"
+  additional_tracks: ""
+  difficulty_level: "🔧 Intermediate - Some experience, manageable challenge"
+
+  summary: |
+    I built a Discord bot powered by Jentic Standard Agent.
+    In addition to the core agent workflow, the bot integrates with the Giphy API to search and return GIFs directly in chat, and connects with the Gemini API for enhanced natural language responses.
+    This provides both a fun, interactive experience and demonstrates practical multi-API integration through the Jentic ecosystem.
+
+  technical_highlights: |
+    - Integrated Jentic Standard Agent into a Discord bot using discord.py
+    - Implemented `!agent` command for free-form queries with error recovery
+    - Added Giphy API integration to retrieve and send GIFs in response to user prompts
+    - Connected with Gemini API for alternative LLM-powered responses
+    - Configured environment with `.env.example` (no hardcoded keys)
+    - Added both text commands and slash commands for better UX
+
+  setup_instructions: |
+    # Clone repo
+    git clone https://github.com/rain766/jentic-summer-hackathon.git
+    cd jentic-summer-hackathon/tracks/track-01-standard-agent-discord
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+
+    # Setup env
+    cp .env.example .env
+    # Fill in DISCORD_BOT_TOKEN, JENTIC_AGENT_API_KEY, GIPHY_API_KEY, and GEMINI_API_KEY
+
+    # Run
+    python main.py
+
+  main_repo_pr: "https://github.com/jentic-community/jentic-summer-hackathon/pull/TBD"
+
+  additional_links: |
+  **Demo screenshot**
+
+  ![Demo screenshot](./gemini.png)
+
+  project_status: "🚧 MVP - Core functionality works, minor issues remain"
+
+  impact_metrics: |
+    - Bot connects and responds to Discord commands
+    - Successfully integrates 2 external APIs (Giphy + Gemini) in addition to Jentic
+    - Supports multi-step tasks with Jentic tools and visual feedback (GIFs)
+    - Typical response latency < 15s
+    - Demonstrates how agents can combine utility (LLM reasoning) and engagement (GIF search)
+
+  challenges_learnings: |
+    Challenges:
+    - Handling async event loop conflicts between discord.py and agent calls
+    - Managing API rate limits during Giphy searches
+    - Ensuring environment variables were securely managed across multiple APIs
+
+    Learnings:
+    - Learned how to combine multiple external APIs into a single agent workflow
+    - Improved knowledge of handling async tasks in Python with Discord bots
+    - Best practices for managing secrets with .env and .gitignore
+
+  future_improvements: |
+    Short-term:
+    - Add richer Discord embeds to display GIF previews and Gemini responses
+    - Implement progress indicators for long-running tasks
+
+    Long-term:
+    - Support multi-turn conversations with memory
+    - Add integrations with more APIs (e.g. YouTube Data API)
+    - Provide configuration for users to enable/disable integrations dynamically
+
+
+  open_source_intent: "🤝 Yes - I'm open to community contributions and maintenance"
+
+  team_info: "Solo submission - YuWei Lin"
+
+  additional_notes: |
+    Special consideration:
+    - This bot can be a template for anyone to quickly build Jentic-powered Discord bots.
+    Known limitations:
+    - Currently supports REST APIs only
+    - Requires Python 3.11+ due to discord.py version
+
+  final_confirmations:
+    - "🎯 My submission directly addresses the track requirements"
+    - "⚡ I believe this could be useful to other developers/companies"
+    - "📞 I'm available for follow-up questions via Discord"
+    - "🏆 I understand that winners may be invited to interview at Jentic"
