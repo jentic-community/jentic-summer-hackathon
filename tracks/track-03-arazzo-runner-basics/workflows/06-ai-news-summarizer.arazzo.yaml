@@ -1,0 +1,284 @@
+arazzo: 1.0.0
+info:
+  title: AI News Summarizer Workflow
+  description: Custom workflow that fetches latest news, summarizes with AI, and formats results
+  version: 1.0.0
+
+workflows:
+  - workflowId: aiNewsSummarizer
+    description: Fetch news articles, generate AI summaries, and create formatted output
+    inputs:
+      type: object
+      properties:
+        news_category:
+          type: string
+          description: Category of news to fetch
+          default: "technology"
+          enum: ["business", "entertainment", "general", "health", "science", "sports", "technology"]
+        max_articles:
+          type: integer
+          description: Maximum number of articles to process
+          default: 3
+          minimum: 1
+          maximum: 5
+        summary_style:
+          type: string
+          description: Style of AI summary to generate
+          default: "concise"
+          enum: ["concise", "detailed", "bullet-points", "executive"]
+        target_audience:
+          type: string
+          description: Target audience for the summary
+          default: "general"
+          enum: ["general", "technical", "business", "academic"]
+      required: []
+
+    steps:
+      - stepId: fetchLatestNews
+        description: Fetch latest news articles from NewsAPI
+        operationRef: '#/operations/getTopHeadlines'
+        parameters:
+          category: $inputs.news_category
+          pageSize: $inputs.max_articles
+          country: "us"
+        outputs:
+          articles: $response.body.articles
+          total_results: $response.body.totalResults
+          status: $response.body.status
+
+      - stepId: validateNewsData
+        description: Validate that we received news articles
+        operationRef: '#/operations/validateData'
+        parameters:
+          data: $steps.fetchLatestNews.outputs.articles
+          expected_count: $inputs.max_articles
+        dependsOn: [fetchLatestNews]
+        outputs:
+          is_valid: $response.body.valid
+          article_count: $response.body.count
+          validation_message: $response.body.message
+
+      - stepId: prepareArticlesForAI
+        description: Format articles for AI processing
+        operationRef: '#/operations/formatArticlesForAI'
+        parameters:
+          articles: $steps.fetchLatestNews.outputs.articles
+          style: $inputs.summary_style
+          audience: $inputs.target_audience
+        dependsOn: [validateNewsData]
+        condition: $steps.validateNewsData.outputs.is_valid == true
+        outputs:
+          formatted_content: $response.body.formatted_text
+          article_titles: $response.body.titles
+          word_count: $response.body.word_count
+
+      - stepId: generateAISummary
+        description: Generate AI-powered summary using OpenAI
+        operationRef: '#/operations/createAISummary'
+        parameters:
+          content: $steps.prepareArticlesForAI.outputs.formatted_content
+          style: $inputs.summary_style
+          audience: $inputs.target_audience
+          max_tokens: 500
+        dependsOn: [prepareArticlesForAI]
+        outputs:
+          ai_summary: $response.body.choices[0].message.content
+          tokens_used: $response.body.usage.total_tokens
+          model_used: $response.body.model
+
+      - stepId: createFinalReport
+        description: Create final formatted report with metadata
+        operationRef: '#/operations/formatFinalReport'
+        parameters:
+          original_articles: $steps.fetchLatestNews.outputs.articles
+          ai_summary: $steps.generateAISummary.outputs.ai_summary
+          metadata:
+            category: $inputs.news_category
+            article_count: $steps.validateNewsData.outputs.article_count
+            tokens_used: $steps.generateAISummary.outputs.tokens_used
+            model_used: $steps.generateAISummary.outputs.model_used
+            style: $inputs.summary_style
+            audience: $inputs.target_audience
+        dependsOn: [generateAISummary]
+        outputs:
+          final_report: $response.body.formatted_report
+          report_metadata: $response.body.metadata
+          success: true
+
+      - stepId: handleError
+        description: Handle case where news fetching or validation failed
+        operationRef: '#/operations/createErrorReport'
+        parameters:
+          error_type: "news_fetch_failed"
+          validation_result: $steps.validateNewsData.outputs.validation_message || "No validation performed"
+          requested_category: $inputs.news_category
+          requested_count: $inputs.max_articles
+        condition: $steps.validateNewsData.outputs.is_valid == false || $steps.validateNewsData.outputs.is_valid == null
+        dependsOn: [validateNewsData]
+        outputs:
+          error_report: $response.body.error_message
+          recommendations: $response.body.recommendations
+          success: false
+
+operations:
+  - operationId: getTopHeadlines
+    method: GET
+    url: https://newsapi.org/v2/top-headlines
+    description: Fetch top headlines from NewsAPI
+    headers:
+      X-API-Key: ${NEWS_API_KEY}
+    parameters:
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+          enum: [business, entertainment, general, health, science, sports, technology]
+        description: News category
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+        description: Number of articles to fetch
+      - name: country
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[a-z]{2}$'
+          default: us
+        description: 2-letter country code
+
+  - operationId: validateData
+    method: POST
+    url: https://httpbin.org/post
+    description: Validate news data structure
+    headers:
+      Content-Type: application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                description: Data to validate
+              expected_count:
+                type: integer
+                description: Expected number of items
+            required: [data]
+
+  - operationId: formatArticlesForAI
+    method: POST
+    url: https://httpbin.org/post
+    description: Format articles for AI processing
+    headers:
+      Content-Type: application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              articles:
+                type: array
+                description: News articles to format
+              style:
+                type: string
+                description: Summary style preference
+              audience:
+                type: string
+                description: Target audience
+            required: [articles]
+
+  - operationId: createAISummary
+    method: POST
+    url: https://api.openai.com/v1/chat/completions
+    description: Generate AI summary using OpenAI GPT
+    headers:
+      Authorization: Bearer ${OPENAI_API_KEY}
+      Content-Type: application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              model:
+                type: string
+                default: "gpt-4"
+              messages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    role:
+                      type: string
+                      enum: ["system", "user", "assistant"]
+                    content:
+                      type: string
+                default:
+                  - role: "system"
+                    content: "You are a professional news summarizer. Create concise, informative summaries of news articles."
+                  - role: "user"
+                    content: "{content}"
+              max_tokens:
+                type: integer
+                default: 500
+              temperature:
+                type: number
+                default: 0.3
+            required: [model, messages]
+
+  - operationId: formatFinalReport
+    method: POST
+    url: https://httpbin.org/post
+    description: Create final formatted report
+    headers:
+      Content-Type: application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              original_articles:
+                type: array
+                description: Original news articles
+              ai_summary:
+                type: string
+                description: AI-generated summary
+              metadata:
+                type: object
+                description: Processing metadata
+            required: [original_articles, ai_summary]
+
+  - operationId: createErrorReport
+    method: POST
+    url: https://httpbin.org/post
+    description: Generate error report for failed operations
+    headers:
+      Content-Type: application/json
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error_type:
+                type: string
+                description: Type of error encountered
+              validation_result:
+                type: string
+                description: Validation error message
+              requested_category:
+                type: string
+                description: Originally requested news category
+              requested_count:
+                type: integer
+                description: Originally requested article count
+            required: [error_type]
