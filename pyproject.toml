@@ -1,0 +1,39 @@
+[project]
+name = "jentic-summer-hackathon"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Ivo Garais", email = "ivogarais@titanhq.com" }
+]
+dependencies = [
+    "discord>=2.3.2",
+    "discord-py>=2.5.2",
+    "python-dotenv>=1.1.1",
+    "discord-ext-bot>=1.0.1",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "openai>=1.99.9",
+    "jentic>=0.9.4",
+    "litellm>=1.75.7",
+    "google-generativeai>=0.8.5",
+    "structlog>=25.4.0",
+    "pyyaml>=6.0.2",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jentic_summer_hackathon"]
