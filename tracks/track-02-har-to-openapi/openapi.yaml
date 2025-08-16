@@ -11,7 +11,7 @@ paths:
   /api/user:
     post:
       summary: POST /api/user
-      description: Endpoint discovered from HAR analysis (21 calls observed)
+      description: Endpoint discovered from HAR analysis (17 calls observed)
       responses:
         '200':
           description: Successful response
@@ -20,62 +20,10 @@ paths:
               schema:
                 type: object
                 description: Response schema to be defined based on actual responses
-  /cdn-cgi/challenge-platform/h/b/jsd/r/0.5724895856245843:1755342618:jRM3M0joTnYSAtOou2ePfArhgUHzovDh4xNYXr1ZyIU/{id}:
-    post:
-      summary: POST /cdn-cgi/challenge-platform/h/b/jsd/r/0.5724895856245843:1755342618:jRM3M0joTnYSAtOou2ePfArhgUHzovDh4xNYXr1ZyIU/{id}
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /recaptcha/enterprise/reload:
-    post:
-      summary: POST /recaptcha/enterprise/reload
-      description: Endpoint discovered from HAR analysis (10 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: k
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
-        description: Parameter discovered in HAR analysis
-  /recaptcha/enterprise/clr:
-    post:
-      summary: POST /recaptcha/enterprise/clr
-      description: Endpoint discovered from HAR analysis (10 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: k
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
-        description: Parameter discovered in HAR analysis
   /api/v2/ads/listings:
     post:
       summary: POST /api/v2/ads/listings
-      description: Endpoint discovered from HAR analysis (13 calls observed)
+      description: Endpoint discovered from HAR analysis (12 calls observed)
       responses:
         '200':
           description: Successful response
@@ -99,10 +47,89 @@ paths:
           type: string
         example: size72x52
         description: Parameter discovered in HAR analysis
+  /recaptcha/enterprise/reload:
+    post:
+      summary: POST /recaptcha/enterprise/reload
+      description: Endpoint discovered from HAR analysis (12 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: k
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
+        description: Parameter discovered in HAR analysis
+  /recaptcha/enterprise/clr:
+    post:
+      summary: POST /recaptcha/enterprise/clr
+      description: Endpoint discovered from HAR analysis (12 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: k
+        in: query
+        required: false
+        schema:
+          type: string
+        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
+        description: Parameter discovered in HAR analysis
+  /old/v1/autocomplete:
+    post:
+      summary: POST /old/v1/autocomplete
+      description: Endpoint discovered from HAR analysis (5 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+  /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json:
+    get:
+      summary: GET /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json
+      description: Endpoint discovered from HAR analysis (5 calls observed)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response schema to be defined based on actual responses
+      parameters:
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: string
+        example: '6170347'
+        description: Parameter discovered in HAR analysis
+      - name: address
+        in: query
+        required: false
+        schema:
+          type: string
+        example: semi-detached-house-15-cherbury-park-road-lucan-co-dublin
+        description: Parameter discovered in HAR analysis
   /maps/51896624-22c9-466c-a329-a94c71f30a0d/style.json:
     get:
       summary: GET /maps/51896624-22c9-466c-a329-a94c71f30a0d/style.json
-      description: Endpoint discovered from HAR analysis (4 calls observed)
+      description: Endpoint discovered from HAR analysis (5 calls observed)
       responses:
         '200':
           description: Successful response
@@ -122,7 +149,7 @@ paths:
   /tiles/v3/tiles.json:
     get:
       summary: GET /tiles/v3/tiles.json
-      description: Endpoint discovered from HAR analysis (4 calls observed)
+      description: Endpoint discovered from HAR analysis (5 calls observed)
       responses:
         '200':
           description: Successful response
@@ -142,7 +169,7 @@ paths:
   /maps/51896624-22c9-466c-a329-a94c71f30a0d/sprite@2x.json:
     get:
       summary: GET /maps/51896624-22c9-466c-a329-a94c71f30a0d/sprite@2x.json
-      description: Endpoint discovered from HAR analysis (4 calls observed)
+      description: Endpoint discovered from HAR analysis (5 calls observed)
       responses:
         '200':
           description: Successful response
@@ -151,10 +178,11 @@ paths:
               schema:
                 type: object
                 description: Response schema to be defined based on actual responses
-  /tiles/v3/{id}/{id}/20.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/20.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
+
+  /$rpc/google.internal.waa.v1.Waa/GenerateIT:
+    post:
+      summary: POST /$rpc/google.internal.waa.v1.Waa/GenerateIT
+      description: Endpoint discovered from HAR analysis (1 calls observed)
       responses:
         '200':
           description: Successful response
@@ -163,364 +191,9 @@ paths:
               schema:
                 type: object
                 description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/21.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/21.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/41.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/41.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/42.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/42.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/83.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/83.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/82.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/82.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/84.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/84.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/166.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/166.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/167.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/167.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/333.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/333.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/334.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/334.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/667.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/667.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/666.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/666.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/1334.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/1334.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/1333.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/1333.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/2668.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/2668.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/2669.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/2669.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json:
-    get:
-      summary: GET /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: id
-        in: query
-        required: false
-        schema:
-          type: string
-        example: '6066749'
-        description: Parameter discovered in HAR analysis
-      - name: address
-        in: query
-        required: false
-        schema:
-          type: string
-        example: detached-house-doctors-road-stratford-on-slaney-baltinglass-co-wicklow
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/10676.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/10676.pbf
+  /youtubei/v1/log_event:
+    post:
+      summary: POST /youtubei/v1/log_event
       description: Endpoint discovered from HAR analysis (4 calls observed)
       responses:
         '200':
@@ -531,36 +204,17 @@ paths:
                 type: object
                 description: Response schema to be defined based on actual responses
       parameters:
-      - name: key
+      - name: alt
         in: query
         required: false
         schema:
           type: string
-        example: 94POrAmV6YVyhXBXGw8R
+        example: json
         description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/10675.pbf:
+  
+  /old/v3/filters/search/residential-sold:
     get:
-      summary: GET /tiles/v3/{id}/{id}/10675.pbf
-      description: Endpoint discovered from HAR analysis (4 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /old/v1/tracking:
-    post:
-      summary: POST /old/v1/tracking
+      summary: GET /old/v3/filters/search/residential-sold
       description: Endpoint discovered from HAR analysis (1 calls observed)
       responses:
         '200':
@@ -570,106 +224,11 @@ paths:
               schema:
                 type: object
                 description: Response schema to be defined based on actual responses
-  /cdn-cgi/challenge-platform/h/b/jsd/r/0.9144615024363112:1755342618:TvnKFw9XE7iAQa-M9eCOLT3EBGfZUhbV8V-CbYPh3Rc/{id}:
-    post:
-      summary: POST /cdn-cgi/challenge-platform/h/b/jsd/r/0.9144615024363112:1755342618:TvnKFw9XE7iAQa-M9eCOLT3EBGfZUhbV8V-CbYPh3Rc/{id}
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /api/v1/locations/areas/{id}/mapping/allianz:
-    get:
-      summary: GET /api/v1/locations/areas/{id}/mapping/allianz
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /old/v3/filters/search/residential-to-rent:
-    get:
-      summary: GET /old/v3/filters/search/residential-to-rent
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /old/v1/autocomplete:
-    post:
-      summary: POST /old/v1/autocomplete
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /api/v1/locations/areas/undefined/mapping/allianz:
-    get:
-      summary: GET /api/v1/locations/areas/undefined/mapping/allianz
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /tiles/v3/{id}/{id}/10612.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/10612.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/{id}/{id}/10613.pbf:
-    get:
-      summary: GET /tiles/v3/{id}/{id}/10613.pbf
-      description: Endpoint discovered from HAR analysis (2 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
 components:
   schemas: {}
-  securitySchemes: {}
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key authentication
