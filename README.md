@@ -1,5 +1,7 @@
 # 🚀 Jentic x Give(a)Go Summer Hackathon 2025
 
+> 📝 **Important**: [Register here](https://docs.google.com/spreadsheets/d/1oJaRC0JtR-3l5SSh1StUz62qNDyzo3NYp0fI9bveYxs/edit?usp=sharing) to receive your certificate and AI credits! By providing your details, you consent to receive marketing communications from Jentic (you can opt out anytime).
+
 <div align="center">
   <p align="center">
     <a href="https://x.com/JenticAI">
@@ -139,8 +141,6 @@ Pick a track, follow the guides, ship something real. No detours.
 - **🏆 Participation Certificate** — Official hackathon completion certificate
 - **💳 AI Tool Credits** — Free credits for popular AI development tools
 - **📧 Community Updates** — Stay connected with future Jentic events and opportunities
-
-> 📝 **Important**: [Register here](https://docs.google.com/spreadsheets/d/1oJaRC0JtR-3l5SSh1StUz62qNDyzo3NYp0fI9bveYxs/edit?usp=sharing) to receive your certificate and AI credits! By providing your details, you consent to receive marketing communications from Jentic (you can opt out anytime).
 
 #### 🏆 Winner Prizes
 - **🏅 Social Media Champion** — Featured blog post about you
