@@ -34,6 +34,8 @@ def check_standard_agent():
     print("🤖 Testing Standard Agent connection...")
     
     try:
+        import sys
+        sys.path.append('standard-agent')
         from agents.prebuilt import ReWOOAgent
         
         model = os.getenv('LLM_MODEL', 'gpt-4')
@@ -55,12 +57,12 @@ def check_jentic_access():
     print("🔧 Testing Jentic API access...")
     
     try:
-        from jentic import Jentic
-        from jentic.models import SearchRequest
+        import sys
+        sys.path.append('standard-agent')
+        from agents.tools.jentic import JenticClient
         
-        client = Jentic()
-        # Simple test search - should work even with basic access
-        # Don't execute to avoid using quota during setup verification
+        # Test that we can create a client (this uses the API key)
+        client = JenticClient()
         print("✅ Jentic API access confirmed")
         return True
     except ImportError as e:

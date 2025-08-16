@@ -1,20 +1,25 @@
-# Standard Agent framework
-standard-agent>=0.1.0
-
-# Jentic SDK for API access
-jentic>=0.1.0
-
-# Environment management
+# Core dependencies from standard-agent
+jentic>=0.9.1
+openai>=1.0
+pydantic>=2.0
 python-dotenv>=1.0.0
+litellm>=1.74.3
+google-generativeai
+structlog
+pyyaml
 
 # Testing and validation
-pytest>=7.0.0
+pytest>=8.0
 pytest-asyncio>=0.21.0
+pytest-mock
 
 # Data handling
-pydantic>=2.0.0
 jsonschema>=4.0.0
 
 # Optional: Additional utilities
 rich>=13.0.0  # For pretty console output
 click>=8.0.0  # For CLI tools
+
+# Development tools
+ruff            # fast linter/formatter
+mypy

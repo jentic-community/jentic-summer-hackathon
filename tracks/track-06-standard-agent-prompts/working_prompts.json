@@ -1,0 +1,42 @@
+[
+  {
+    "prompt": "What is 2+2?",
+    "goal": "Test basic mathematical reasoning",
+    "constraints": "Use only reasoning, no external tools",
+    "category": "Simple Math",
+    "expected_result": "4",
+    "verified": true
+  },
+  {
+    "prompt": "List 3 benefits of learning Python programming",
+    "goal": "Demonstrate knowledge synthesis about programming languages",
+    "constraints": "Use only reasoning, no external APIs",
+    "category": "Technical Knowledge",
+    "expected_result": "List of Python benefits like readability, versatility, large community",
+    "verified": false
+  },
+  {
+    "prompt": "Explain the difference between a list and a dictionary in Python",
+    "goal": "Test technical explanation capabilities",
+    "constraints": "Use only reasoning, no external tools",
+    "category": "Technical Explanation",
+    "expected_result": "Clear explanation of data structure differences",
+    "verified": false
+  },
+  {
+    "prompt": "Create a simple 3-step plan for learning JavaScript",
+    "goal": "Test planning and educational structuring",
+    "constraints": "Use only reasoning, no external APIs",
+    "category": "Planning",
+    "expected_result": "Structured learning plan with clear steps",
+    "verified": false
+  },
+  {
+    "prompt": "What are the main components of a computer?",
+    "goal": "Test basic technical knowledge",
+    "constraints": "Use only reasoning, no external tools",
+    "category": "Technical Knowledge",
+    "expected_result": "List of CPU, RAM, storage, motherboard, etc.",
+    "verified": false
+  }
+]

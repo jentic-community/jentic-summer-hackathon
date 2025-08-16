@@ -19,10 +19,17 @@ def test_single_prompt(prompt_text, timeout=120):
     
     try:
         # Import and initialize agent
-        from agents.prebuilt import ReWOOAgent
+        import sys
+        sys.path.append('standard-agent')
+        
+        # Fix LiteLLM parameter compatibility
+        import litellm
+        litellm.drop_params = True
+        
+        from agents.prebuilt import ReACTAgent
         
         model = os.getenv('LLM_MODEL', 'gpt-4')
-        agent = ReWOOAgent(model=model)
+        agent = ReACTAgent(model=model)
         
         print(f"🤖 Agent initialized with model: {model}")
         print(f"⏰ Starting execution (timeout: {timeout}s)...")
@@ -34,21 +41,29 @@ def test_single_prompt(prompt_text, timeout=120):
         end_time = time.time()
         execution_time = end_time - start_time
         
+        # Extract the final answer from ReasoningResult
+        final_answer = result.final_answer if hasattr(result, 'final_answer') else str(result)
+        success = result.success if hasattr(result, 'success') else True
+        
         # Display results
         print("✅ EXECUTION SUCCESSFUL")
         print(f"⏱️  Execution time: {execution_time:.2f} seconds")
+        print(f"🔄 Iterations: {result.iterations if hasattr(result, 'iterations') else 'N/A'}")
+        print(f"🛠️  Tool calls: {len(result.tool_calls) if hasattr(result, 'tool_calls') else 0}")
         print()
-        print("📋 RESULT:")
+        print("📋 FINAL ANSWER:")
         print("-" * 30)
-        print(result)
+        print(final_answer)
         print("-" * 30)
         
         # Return structured results for potential logging
         return {
             'prompt': prompt_text,
-            'success': True,
+            'success': success,
             'execution_time': execution_time,
-            'result': result,
+            'result': final_answer,
+            'iterations': result.iterations if hasattr(result, 'iterations') else 1,
+            'tool_calls': len(result.tool_calls) if hasattr(result, 'tool_calls') else 0,
             'model': model,
             'timestamp': time.time()
         }
