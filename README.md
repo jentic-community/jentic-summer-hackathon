@@ -134,22 +134,18 @@ Pick a track, follow the guides, ship something real. No detours.
 - **+5 points** — Best project showcase with demo
 - **+1 point** — Star all 4 Jentic repos ⭐ (easy bonus!)
 
-### 🎁 Prizes
+### 🎁 Prizes & Awards
 
-#### 🎖️ For All Participants
-- **🎤 Exclusive Access** — Invite-only Q&As with Sean and Michael (Jentic founders)
+#### 🎖️ For All Teams
+- **🎤 Jentic Interview Opportunity** — All teams receive interview opportunities with Jentic
 - **🏆 Participation Certificate** — Official hackathon completion certificate
 - **💳 AI Tool Credits** — Free credits for popular AI development tools
 - **📧 Community Updates** — Stay connected with future Jentic events and opportunities
+- **🎤 Exclusive Access** — Invite-only Q&As with Sean and Michael (Jentic founders)
 
-#### 🏆 Winner Prizes
-- **🏅 Social Media Champion** — Featured blog post about you
-- **🌱 Community Builder** — 100 trees planted in your name
-- **🍽️ Sean's Choice Award** — Dinner with Jentic founder
-- **💻 Tech Glory** — 1-month Cursor/Copilot/Claude Pro
-- **☕ Experience** — Office tours, founder coffee chats
-- **🌟 Recognition** — Community spotlight features
-- **💼 Career Opportunity** — Interview invitation at Jentic
+#### 🏆 Top Performers
+- **☕ Top 2 Teams** — Personal coffee time with Sean (Jentic founder)
+- **🤖 Top 4 Teams** — 1-month ChatGPT subscription
 
 ---
 
