@@ -37,7 +37,7 @@ body:
     # Run
     python main.py
 
-  main_repo_pr: "https://github.com/jentic-community/jentic-summer-hackathon/pull/TBD"
+  main_repo_pr: "https://github.com/jentic-community/jentic-summer-hackathon/pull/10"
 
   additional_links: |
   **Demo screenshot**
