@@ -1,0 +1,51 @@
+arazzo: 1.0.0
+info:
+  title: Simple News Workflow
+  description: A simplified working workflow that fetches news
+  version: 1.0.0
+
+workflows:
+  - workflowId: simpleNews
+    description: Fetch news articles from NewsAPI
+    inputs:
+      type: object
+      properties:
+        category:
+          type: string
+          description: News category
+          default: "technology"
+        pageSize:
+          type: integer
+          description: Number of articles
+          default: 3
+    steps:
+      - stepId: fetchNews
+        description: Fetch news from NewsAPI
+        operationId: getNews
+        parameters:
+          category: $inputs.category
+          pageSize: $inputs.pageSize
+        outputs:
+          articles: $response.body.articles
+          status: $response.body.status
+
+operations:
+  - operationId: getNews
+    method: GET
+    url: https://newsapi.org/v2/top-headlines
+    headers:
+      X-API-Key: ${NEWS_API_KEY}
+    parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      - name: country
+        in: query
+        schema:
+          type: string
+          default: "us"
