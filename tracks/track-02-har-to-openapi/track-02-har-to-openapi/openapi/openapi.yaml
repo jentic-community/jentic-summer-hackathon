@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: "Discovered API"
+  description: "API specification reverse-engineered from HAR analysis"
+  version: "1.0.0"
+  x-jentic-source-url: "https://example.com"
+
+servers:
+  - url: "https://api.example.com"
+    description: "Production API server"
+
+paths:
+  # Add your discovered endpoints here
+  
+components:
+  schemas:
+    # Define your data models here
