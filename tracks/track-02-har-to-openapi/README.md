@@ -138,4 +138,3 @@ If reviewers or maintainers have questions, reach out to the contributors in the
 
 ---
 
-*Generated and reviewed by the HAR → OpenAPI track team.*
