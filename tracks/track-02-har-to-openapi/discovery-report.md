@@ -1,4 +1,3 @@
-Of course. As a technical writer, my goal is to create documentation that is clear, comprehensive, and empowers a developer to use this API effectively. Here is the detailed documentation for the Daft.ie API you discovered, formatted as a Markdown file.
 
 ---
 
