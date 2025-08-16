@@ -1,0 +1,353 @@
+openapi: 3.0.0
+info:
+  title: "JSONPlaceholder API"
+  description: "Free fake and reliable API for testing and prototyping. Reverse-engineered from HAR analysis."
+  version: "1.0.0"
+  contact:
+    name: "HAR to OpenAPI Converter"
+    url: "https://jsonplaceholder.typicode.com"
+  x-jentic-source-url: "https://jsonplaceholder.typicode.com"
+
+servers:
+  - url: "https://jsonplaceholder.typicode.com"
+    description: "JSONPlaceholder API server"
+
+paths:
+  /posts:
+    get:
+      operationId: getAllPosts
+      summary: "Get all posts"
+      description: "Retrieve a list of all blog posts"
+      responses:
+        '200':
+          description: "List of posts"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+              example:
+                - userId: 1
+                  id: 1
+                  title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+                  body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+                - userId: 1
+                  id: 2
+                  title: "qui est esse"
+                  body: "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+
+    post:
+      operationId: createPost
+      summary: "Create a new post"
+      description: "Create a new blog post (fake - will not be really created)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+            example:
+              title: "foo"
+              body: "bar"
+              userId: 1
+      responses:
+        '201':
+          description: "Post created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                title: "foo"
+                body: "bar"
+                userId: 1
+                id: 101
+
+  /posts/{id}:
+    get:
+      operationId: getPostById
+      summary: "Get a specific post"
+      description: "Retrieve a single blog post by its ID"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Post ID"
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        '200':
+          description: "Post details"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                userId: 1
+                id: 1
+                title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+                body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        '404':
+          description: "Post not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      operationId: updatePost
+      summary: "Update a post"
+      description: "Update an existing blog post (fake - will not be really updated)"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Post ID"
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUpdate'
+            example:
+              id: 1
+              title: "foo"
+              body: "bar"
+              userId: 1
+      responses:
+        '200':
+          description: "Post updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                id: 1
+                title: "foo"
+                body: "bar"
+                userId: 1
+
+    delete:
+      operationId: deletePost
+      summary: "Delete a post"
+      description: "Delete a blog post (fake - will not be really deleted)"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Post ID"
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        '200':
+          description: "Post deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                description: "Empty response indicating successful deletion"
+              example: {}
+
+  /users:
+    get:
+      operationId: getAllUsers
+      summary: "Get all users"
+      description: "Retrieve a list of all users"
+      responses:
+        '200':
+          description: "List of users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                - id: 1
+                  name: "Leanne Graham"
+                  username: "Bret"
+                  email: "Sincere@april.biz"
+                  address:
+                    street: "Kulas Light"
+                    suite: "Apt. 556"
+                    city: "Gwenborough"
+                    zipcode: "92998-3874"
+                    geo:
+                      lat: "-37.3159"
+                      lng: "81.1496"
+                  phone: "1-770-736-8031 x56442"
+                  website: "hildegard.org"
+                  company:
+                    name: "Romaguera-Crona"
+                    catchPhrase: "Multi-layered client-server neural-net"
+                    bs: "harness real-time e-markets"
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: "ID of the user who created the post"
+          example: 1
+        id:
+          type: integer
+          description: "Unique post identifier"
+          example: 1
+        title:
+          type: string
+          description: "Post title"
+          example: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+        body:
+          type: string
+          description: "Post content"
+          example: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      required: [userId, id, title, body]
+
+    PostInput:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Post title"
+          example: "foo"
+        body:
+          type: string
+          description: "Post content"
+          example: "bar"
+        userId:
+          type: integer
+          description: "ID of the user creating the post"
+          example: 1
+      required: [title, body, userId]
+
+    PostUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Post ID"
+          example: 1
+        title:
+          type: string
+          description: "Post title"
+          example: "foo"
+        body:
+          type: string
+          description: "Post content"
+          example: "bar"
+        userId:
+          type: integer
+          description: "ID of the user who owns the post"
+          example: 1
+      required: [id, title, body, userId]
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "Unique user identifier"
+          example: 1
+        name:
+          type: string
+          description: "User's full name"
+          example: "Leanne Graham"
+        username:
+          type: string
+          description: "User's username"
+          example: "Bret"
+        email:
+          type: string
+          format: email
+          description: "User's email address"
+          example: "Sincere@april.biz"
+        address:
+          $ref: '#/components/schemas/Address'
+        phone:
+          type: string
+          description: "User's phone number"
+          example: "1-770-736-8031 x56442"
+        website:
+          type: string
+          description: "User's website"
+          example: "hildegard.org"
+        company:
+          $ref: '#/components/schemas/Company'
+      required: [id, name, username, email]
+
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          description: "Street address"
+          example: "Kulas Light"
+        suite:
+          type: string
+          description: "Suite/apartment number"
+          example: "Apt. 556"
+        city:
+          type: string
+          description: "City name"
+          example: "Gwenborough"
+        zipcode:
+          type: string
+          description: "ZIP/postal code"
+          example: "92998-3874"
+        geo:
+          $ref: '#/components/schemas/Geo'
+      required: [street, city, zipcode]
+
+    Geo:
+      type: object
+      properties:
+        lat:
+          type: string
+          description: "Latitude coordinate"
+          example: "-37.3159"
+        lng:
+          type: string
+          description: "Longitude coordinate"
+          example: "81.1496"
+      required: [lat, lng]
+
+    Company:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Company name"
+          example: "Romaguera-Crona"
+        catchPhrase:
+          type: string
+          description: "Company catch phrase"
+          example: "Multi-layered client-server neural-net"
+        bs:
+          type: string
+          description: "Company business focus"
+          example: "harness real-time e-markets"
+      required: [name]
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: "Error message"
+          example: "Post not found"
+        code:
+          type: string
+          description: "Error code"
+          example: "NOT_FOUND"
+      required: [error]
