@@ -1,0 +1,307 @@
+name: Project Submission
+description: Submit your hackathon contribution for Jentic x Give(a)Go Summer Hackathon 2025
+title: "[SUBMISSION] "
+labels: ["submission", "hackathon-2025"]
+body:
+  - type: input
+    id: team
+    attributes:
+      label: Team or Participant Name
+      description: Your name or team name for recognition
+      placeholder: "Jane Doe" or "Team Awesome"
+    validations:
+      required: true
+  
+  - type: input
+    id: discord_handle
+    attributes:
+      label: Discord Handle
+      description: Your Discord username for communication and prize delivery
+      placeholder: "@username or username#1234"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Primary Hackathon Track
+      description: Which track did you primarily work on?
+      options:
+        - "Track 01 - Standard Agent (Discord) [3 points]"
+        - "Track 02 - HAR → OpenAPI [3 points]"
+        - "Track 03 - Arazzo Runner Basics [3 points]"
+        - "Track 04 - Agent Comms (Slack/Email) [5 points]"
+        - "Track 05 - OpenAPI Minifier [5 points]"
+        - "Track 06 - Standard Agent Prompts [1 point]"
+        - "Track 07 - API Quality Scorecard [5 points]"
+        - "Track 08 - Chrome Extension API Discovery [5 points]"
+        - "Track 09 - OpenAPI Validation Tools [5 points]"
+        - "Track 10 - Generic API Discovery [3 points]"
+        - "Track 11 - LLM-Powered API Discovery [5 points]"
+        - "Track 12 - GraphQL Support in Arazzo [5 points]"
+        - "Track 13 - New Reasoning Models [10 points]"
+        - "Track 14 - Local MCP Support [10 points]"
+        - "Track 15 - Agent Behavior Modification [10 points]"
+        - "Track 16 - Doc-to-Arazzo Converter [8 points]"
+        - "Track 17 - JITT vs Front-loading Research [8 points]"
+        - "Track 18 - Prompt Injection Detection [8 points]"
+        - "Track 19 - Jentic CLI Agent [8 points]"
+        - "Track 20 - Integration Framework [8 points]"
+        - "Multiple Tracks (specify in additional notes)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_tracks
+    attributes:
+      label: Additional Tracks (if any)
+      description: List any secondary tracks you worked on for bonus points
+      placeholder: "Track 06 - Standard Agent Prompts, Track 02 - HAR → OpenAPI"
+
+  - type: dropdown
+    id: difficulty_level
+    attributes:
+      label: Self-Assessed Difficulty Level
+      description: How challenging was this project for you personally?
+      options:
+        - "🌱 Beginner - New to hackathons/this technology"
+        - "🔧 Intermediate - Some experience, manageable challenge"
+        - "⚡ Advanced - Experienced developer, significant challenge"
+        - "🧠 Expert - Very experienced, cutting-edge work"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Project Summary
+      description: What did you build and what problem does it solve? (Elevator pitch style)
+      placeholder: "I built a Discord bot that automatically converts API documentation to Arazzo workflows, solving the problem of manual workflow creation for developers who want to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_highlights
+    attributes:
+      label: Technical Highlights
+      description: What are the key technical achievements or innovations in your solution?
+      placeholder: "- Implemented real-time HAR file parsing with 99% accuracy\n- Created custom LLM prompt templates that reduced API call costs by 60%\n- Built fault-tolerant workflow execution with automatic retry logic"
+
+  - type: textarea
+    id: setup_instructions
+    attributes:
+      label: Setup & Demo Instructions
+      description: Step-by-step instructions to run your project (copy-paste ready)
+      render: bash
+      placeholder: |
+        # Clone and setup
+        git clone https://github.com/username/repo.git
+        cd repo
+        pip install -r requirements.txt
+        
+        # Configuration
+        cp .env.example .env
+        # Edit .env with your API keys
+        
+        # Run
+        python main.py
+        
+        # Test with example
+        python test_demo.py
+    validations:
+      required: true
+
+  - type: input
+    id: main_repo_pr
+    attributes:
+      label: Main Repository/PR Link
+      description: Link to your primary repository or pull request
+      placeholder: "https://github.com/jentic/jentic-public-apis/pull/123"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_links
+    attributes:
+      label: Additional Links
+      description: Other relevant repositories, PRs, or resources
+      placeholder: |
+        Additional PRs:
+        - https://github.com/jentic/standard-agent/pull/456
+        - https://github.com/jentic/arazzo-engine/pull/789
+        
+        Live Demo: https://your-demo-site.com
+        Documentation: https://your-docs.com
+
+  - type: textarea
+    id: demo_evidence
+    attributes:
+      label: Demo Evidence
+      description: Screenshots, videos, or GIFs demonstrating your working solution
+      placeholder: |
+        📸 Screenshots: (drag and drop images here)
+        
+        🎥 Demo Video: https://youtu.be/your-video-id
+        
+        📊 Before/After Comparisons: (show the problem your solution solves)
+
+  - type: dropdown
+    id: project_status
+    attributes:
+      label: Project Status
+      description: Current state of your submission
+      options:
+        - "✅ Complete - Fully working and tested"
+        - "🚧 MVP - Core functionality works, minor issues remain"
+        - "🔬 Prototype - Demonstrates concept, needs refinement"
+        - "📚 Research - Analysis/findings without full implementation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact_metrics
+    attributes:
+      label: Impact & Results
+      description: Quantify the impact of your solution (performance improvements, time saved, accuracy gains, etc.)
+      placeholder: |
+        - Reduces manual API documentation time from 4 hours to 15 minutes
+        - Achieves 95% accuracy in workflow generation
+        - Processes 1000+ API endpoints per minute
+        - Saves developers approximately 20 hours per project
+
+  - type: textarea
+    id: social_posts
+    attributes:
+      label: Social Media Posts (Bonus Points!)
+      description: Links to your posts about the hackathon/project for bonus points
+      placeholder: |
+        🐦 Twitter/X Posts:
+        - https://twitter.com/username/status/123456789
+        
+        💼 LinkedIn Posts:  
+        - https://linkedin.com/posts/username-activity-123456789
+        
+        📸 Instagram/TikTok:
+        - https://instagram.com/p/your-post-id
+
+  - type: checkboxes
+    id: quality_checks
+    attributes:
+      label: Quality Checklist
+      description: Confirm you've met these quality standards
+      options:
+        - label: "✅ I used the relevant quality checklist for my track"
+          required: true
+        - label: "📚 I included a comprehensive README with setup instructions"
+          required: true
+        - label: "🧪 I tested my solution in a clean environment"
+          required: true
+        - label: "🔒 I removed all hardcoded secrets and personal information"
+          required: true
+        - label: "🆘 I included troubleshooting information for common issues"
+          required: false
+        - label: "📹 I provided clear demo evidence (screenshots/video)"
+          required: false
+
+  - type: checkboxes
+    id: submission_type
+    attributes:
+      label: Submission Type
+      description: What type of contribution are you making?
+      options:
+        - label: "💻 Code Implementation"
+        - label: "📝 Documentation/Research"
+        - label: "🎨 Prompts/Templates"
+        - label: "🔧 Tools/Utilities"
+        - label: "🧪 Experimental/Research"
+        - label: "🎯 Integration/Workflow"
+
+  - type: textarea
+    id: challenges_learnings
+    attributes:
+      label: Challenges & Learnings
+      description: What obstacles did you overcome? What did you learn?
+      placeholder: |
+        Challenges:
+        - Initially struggled with OpenAPI 3.1 spec parsing edge cases
+        - Had to implement custom retry logic for unreliable external APIs
+        
+        Key Learnings:
+        - Discovered that 80% of API documentation follows predictable patterns
+        - Learned about advanced prompt engineering techniques for structured output
+
+  - type: textarea
+    id: future_improvements
+    attributes:
+      label: Future Roadmap
+      description: What would you do next if you had more time?
+      placeholder: |
+        Short-term (1-2 weeks):
+        - Add support for GraphQL APIs
+        - Implement batch processing for large API collections
+        
+        Long-term (1-3 months):
+        - Build web UI for non-technical users
+        - Add ML model for auto-categorizing API endpoints
+        - Create Slack/Discord integrations for team workflows
+
+  - type: dropdown
+    id: open_source_intent
+    attributes:
+      label: Open Source Commitment
+      description: Are you willing to maintain this as an open source project?
+      options:
+        - "🌟 Yes - I plan to actively maintain and improve this"
+        - "🤝 Yes - I'm open to community contributions and maintenance"
+        - "📚 Documentation only - Happy to share learnings but not maintain code"
+        - "🔒 Private - This was for learning/competition purposes only"
+
+  - type: textarea
+    id: team_info
+    attributes:
+      label: Team Information (if applicable)
+      description: For team submissions, list all contributors and their roles
+      placeholder: |
+        Team Members:
+        - Alice Smith (@alice_dev) - Backend development, API integration
+        - Bob Johnson (@bob_ui) - Frontend development, user experience
+        - Carol Chen (@carol_ai) - AI/ML components, prompt engineering
+        
+        How we collaborated:
+        - Used Discord for communication
+        - Git branches for parallel development
+        - Daily standups at 2 PM EST
+
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: Additional Notes
+      description: Anything else the judges should know
+      placeholder: |
+        Special considerations:
+        - This solution addresses a real pain point I experienced at my company
+        - The approach is novel because existing tools don't handle edge case X
+        - I'm particularly proud of the error handling implementation
+        
+        Known limitations:
+        - Currently only supports REST APIs (GraphQL planned for v2)
+        - Requires Python 3.9+ due to dependency constraints
+        
+        Acknowledgments:
+        - Thanks to @mentor_name for guidance on prompt engineering
+        - Inspired by existing project X but took different approach Y
+
+  - type: checkboxes
+    id: final_confirmations
+    attributes:
+      label: Final Confirmations
+      description: Last checks before submission
+      options:
+        - label: "🎯 My submission directly addresses the track requirements"
+          required: true
+        - label: "⚡ I believe this could be useful to other developers/companies"
+          required: true  
+        - label: "📞 I'm available for follow-up questions via Discord"
+          required: true
+        - label: "🏆 I understand that winners may be invited to interview at Jentic"
+          required: true

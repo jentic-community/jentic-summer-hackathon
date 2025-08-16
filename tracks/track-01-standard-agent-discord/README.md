@@ -86,7 +86,7 @@ LLM_MODEL="gpt-4"  # or claude-sonnet-4, gemini-pro
 python main.py
 ```
 
-Your output should be:
+You should see:
 ```
 ✅ Discord bot logged in as YourBot#1234
 ✅ Standard Agent initialized
