@@ -39,6 +39,102 @@ paths:
             default: 0
       responses:
         '200':
+          description: List of users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  total:
+                    type: integer
+                    description: Total number of users
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+              example:
+                users:
+                  - id: 1
+                    name: "John Doe"
+                    email: "john@example.com"
+                    created_at: "2023-01-01T00:00:00Z"
+                total: 150
+                limit: 20
+                offset: 0
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    post:
+      operationId: createUser
+      summary: Create a new user
+      description: Create a new user account with the provided information
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            example:
+              name: "Jane Smith"
+              email: "jane@example.com"
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 2
+                name: "Jane Smith"
+                email: "jane@example.com"
+                created_at: "2023-01-02T12:00:00Z"
+        '400':
+          description: Invalid user data provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: User with this email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/{userId}:
+    get:
+      operationId: getUserById
+      summary: Get user by ID
+      description: Retrieve detailed information about a specific user
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Unique identifier for the user
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
           description: User details retrieved successfully
           content:
             application/json:
@@ -143,99 +239,3 @@ security:
 tags:
   - name: Users
     description: User management operations
-          description: List of users retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  users:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
-                  total:
-                    type: integer
-                    description: Total number of users
-                  limit:
-                    type: integer
-                  offset:
-                    type: integer
-              example:
-                users:
-                  - id: 1
-                    name: "John Doe"
-                    email: "john@example.com"
-                    created_at: "2023-01-01T00:00:00Z"
-                total: 150
-                limit: 20
-                offset: 0
-        '400':
-          description: Invalid request parameters
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    
-    post:
-      operationId: createUser
-      summary: Create a new user
-      description: Create a new user account with the provided information
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
-            example:
-              name: "Jane Smith"
-              email: "jane@example.com"
-      responses:
-        '201':
-          description: User created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              example:
-                id: 2
-                name: "Jane Smith"
-                email: "jane@example.com"
-                created_at: "2023-01-02T12:00:00Z"
-        '400':
-          description: Invalid user data provided
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '409':
-          description: User with this email already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /users/{userId}:
-    get:
-      operationId: getUserById
-      summary: Get user by ID
-      description: Retrieve detailed information about a specific user
-      tags:
-        - Users
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: Unique identifier for the user
-          schema:
-            type: integer
-            minimum: 1
-      responses:
-        '200':
