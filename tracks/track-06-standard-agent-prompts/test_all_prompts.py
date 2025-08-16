@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Comprehensive prompt testing script for Track 06 - Standard Agent Prompts
-Tests multiple prompts and generates a summary report.
-"""
-
 import os
 import sys
 import time

@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Single prompt testing script for Track 06 - Standard Agent Prompts
-Test individual prompts and see detailed execution results.
-"""
-
 import os
 import sys
 import time

@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Setup verification script for Track 06 - Standard Agent Prompts
-Checks that all required components are properly configured.
-"""
-
 import os
 import sys
 from dotenv import load_dotenv
