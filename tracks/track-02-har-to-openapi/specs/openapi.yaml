@@ -1,234 +1,152 @@
+# OpenAPI Specification Version
 openapi: 3.0.0
+
+# General information about the API
 info:
-  title: Discovered API
-  description: API specification reverse-engineered from HAR analysis
-  version: 1.0.0
-  x-jentic-source-url: https://maptiler.com
+  title: Daft.ie API (Unofficial Discovery)
+  description: An API specification for Daft.ie, reverse-engineered from public web traffic. It includes endpoints for property search, user session checks, and search helpers.
+  version: "1.0.0"
+  x-jentic-source-url: "https://www.daft.ie"
+
+# The server where the API is hosted
 servers:
-- url: https://api.maptiler.com
-  description: API server discovered from HAR analysis
+  - url: "https://www.daft.ie"
+    description: Production Server for Daft.ie
+
+# This section describes each of the 5 discovered API endpoints
 paths:
-  /api/user:
-    post:
-      summary: POST /api/user
-      description: Endpoint discovered from HAR analysis (17 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
+  # Endpoint 1: The primary endpoint for searching property listings
   /api/v2/ads/listings:
-    post:
-      summary: POST /api/v2/ads/listings
-      description: Endpoint discovered from HAR analysis (12 calls observed)
+    get:
+      summary: Search Property Listings
+      description: Retrieves a list of property ads based on filter criteria. This is the main endpoint used on search results pages. The method is GET, as parameters are passed in the URL's query string.
+      operationId: searchPropertyListings
+      parameters:
+        - name: mediaSizes
+          in: query
+          required: false
+          description: Specifies the desired image sizes for the listing media.
+          schema:
+            type: string
+          example: size720x480
+        # Other potential parameters like 'pageSize', 'from', 'location' would be added here.
       responses:
         '200':
-          description: Successful response
+          description: A successful response containing an array of property listings.
           content:
             application/json:
               schema:
                 type: object
-                description: Response schema to be defined based on actual responses
+                properties:
+                  listings:
+                    type: array
+                    items:
+                      type: object # A full schema could be defined in 'components'
+                  totalCount:
+                    type: integer
+
+  # Endpoint 2: The endpoint for retrieving details of a specific property
+  /_next/data/{buildId}/property.json:
+    get:
+      summary: Get Specific Property Details
+      description: Retrieves all detailed information for a single property, which is used when a user clicks to view a specific listing's page.
+      operationId: getPropertyDetails
       parameters:
-      - name: ''
-        in: query
-        required: false
-        schema:
-          type: string
-        example: ''
-        description: Parameter discovered in HAR analysis
-      - name: mediaSizes
-        in: query
-        required: false
-        schema:
-          type: string
-        example: size72x52
-        description: Parameter discovered in HAR analysis
-  /recaptcha/enterprise/reload:
-    post:
-      summary: POST /recaptcha/enterprise/reload
-      description: Endpoint discovered from HAR analysis (12 calls observed)
+        - name: buildId
+          in: path
+          required: true
+          description: A dynamic build ID used by the Next.js framework. This value changes over time.
+          schema:
+            type: string
+          example: r6FgZXTa2BqUvCvw0HNkI
+        - name: id
+          in: query
+          required: true
+          description: The unique identifier for the property.
+          schema:
+            type: string
+          example: '6170347'
+        - name: address
+          in: query
+          required: false
+          description: The URL-friendly address slug for the property.
+          schema:
+            type: string
+          example: semi-detached-house-15-cherbury-park-road-lucan-co-dublin
       responses:
         '200':
-          description: Successful response
+          description: A successful response containing the full details of the requested property.
+          content:
+            application/json:
+              schema:
+                type: object # The schema for the detailed property object would be defined here.
+
+  # Endpoint 3: An endpoint for retrieving available filter options for a search
+  /old/v3/filters/search/{searchType}:
+    get:
+      summary: Get Available Search Filters
+      description: Retrieves the available filter options (such as price ranges, property types, etc.) for a given search category.
+      operationId: getSearchFilters
+      parameters:
+        - name: searchType
+          in: path
+          required: true
+          description: The category of search, for example 'residential-sold' or 'residential-for-sale'.
+          schema:
+            type: string
+          example: residential-sold
+      responses:
+        '200':
+          description: A JSON object containing all the possible filters for the specified category.
           content:
             application/json:
               schema:
                 type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: k
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
-        description: Parameter discovered in HAR analysis
-  /recaptcha/enterprise/clr:
-    post:
-      summary: POST /recaptcha/enterprise/clr
-      description: Endpoint discovered from HAR analysis (12 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: k
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 6LeVIV8lAAAAAIV3iAExz1eHwUtwU3a0OlHfjsmO
-        description: Parameter discovered in HAR analysis
+
+  # Endpoint 4: An endpoint that provides search suggestions
   /old/v1/autocomplete:
     post:
-      summary: POST /old/v1/autocomplete
-      description: Endpoint discovered from HAR analysis (5 calls observed)
+      summary: Get Autocomplete Suggestions
+      description: Provides a list of location or keyword suggestions as a user types into a search bar.
+      operationId: getAutocompleteSuggestions
+      requestBody:
+        description: A JSON payload containing the user's partial search query.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              example:
+                query: "lucan"
       responses:
         '200':
-          description: Successful response
+          description: An array of autocomplete suggestions.
           content:
             application/json:
               schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-  /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json:
-    get:
-      summary: GET /_next/data/r6FgZXTa2BqUvCvw0HNkI/property.json
-      description: Endpoint discovered from HAR analysis (5 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: id
-        in: query
-        required: false
-        schema:
-          type: string
-        example: '6170347'
-        description: Parameter discovered in HAR analysis
-      - name: address
-        in: query
-        required: false
-        schema:
-          type: string
-        example: semi-detached-house-15-cherbury-park-road-lucan-co-dublin
-        description: Parameter discovered in HAR analysis
-  /maps/51896624-22c9-466c-a329-a94c71f30a0d/style.json:
-    get:
-      summary: GET /maps/51896624-22c9-466c-a329-a94c71f30a0d/style.json
-      description: Endpoint discovered from HAR analysis (5 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /tiles/v3/tiles.json:
-    get:
-      summary: GET /tiles/v3/tiles.json
-      description: Endpoint discovered from HAR analysis (5 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: key
-        in: query
-        required: false
-        schema:
-          type: string
-        example: 94POrAmV6YVyhXBXGw8R
-        description: Parameter discovered in HAR analysis
-  /maps/51896624-22c9-466c-a329-a94c71f30a0d/sprite@2x.json:
-    get:
-      summary: GET /maps/51896624-22c9-466c-a329-a94c71f30a0d/sprite@2x.json
-      description: Endpoint discovered from HAR analysis (5 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
+                type: array
+                items:
+                  type: object
 
-  /$rpc/google.internal.waa.v1.Waa/GenerateIT:
+  # Endpoint 5: An endpoint for checking the user's authentication status
+  /api/user:
     post:
-      summary: POST /$rpc/google.internal.waa.v1.Waa/GenerateIT
-      description: Endpoint discovered from HAR analysis (1 calls observed)
+      summary: Check User Session Status
+      description: An internal endpoint called on page loads to check if the visitor is logged in. For guest users who are not logged in, it returns an empty JSON object.
+      operationId: checkUserSession
       responses:
         '200':
-          description: Successful response
+          description: A successful response. The body contains user details if logged in, or an empty object for guests.
           content:
             application/json:
               schema:
                 type: object
-                description: Response schema to be defined based on actual responses
-  /youtubei/v1/log_event:
-    post:
-      summary: POST /youtubei/v1/log_event
-      description: Endpoint discovered from HAR analysis (4 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
-      parameters:
-      - name: alt
-        in: query
-        required: false
-        schema:
-          type: string
-        example: json
-        description: Parameter discovered in HAR analysis
-  
-  /old/v3/filters/search/residential-sold:
-    get:
-      summary: GET /old/v3/filters/search/residential-sold
-      description: Endpoint discovered from HAR analysis (1 calls observed)
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                description: Response schema to be defined based on actual responses
+              example: {} # Example for a guest user
+
+# The 'components' section is for defining reusable objects.
 components:
   schemas: {}
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
-      description: API key authentication
+  securitySchemes: {}
