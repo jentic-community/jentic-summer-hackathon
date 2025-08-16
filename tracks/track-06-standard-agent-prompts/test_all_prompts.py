@@ -22,7 +22,7 @@ def test_prompt_collection(prompts: List[str], timeout: int = 120) -> List[Dict[
         try:
             # Import and initialize agent
             import sys
-            sys.path.append('standard-agent')
+            sys.path.append('../standard-agent')
             
             # Fix LiteLLM parameter compatibility
             import litellm

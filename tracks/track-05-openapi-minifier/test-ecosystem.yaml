@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: Simple Test API
+  version: 1.0.0
+  description: A basic API for testing the minifier
+servers:
+- url: https://api.example.com/v1
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Create user
+      description: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john@example.com
+        profile:
+          $ref: '#/components/schemas/UserProfile'
+    CreateUserRequest:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john@example.com
+    UserProfile:
+      type: object
+      properties:
+        bio:
+          type: string
+          example: Software developer
+        avatar:
+          type: string
+          format: uri
+          example: https://example.com/avatar.jpg
+  securitySchemes: {}

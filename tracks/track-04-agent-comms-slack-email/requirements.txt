@@ -22,14 +22,14 @@ pytest>=7.4.0
 # Platform-specific libraries - UNCOMMENT and install as needed:
 
 # For Slack integration:
-# slack-sdk>=3.26.0
-# slack-bolt>=1.18.0
+slack-sdk>=3.26.0
+slack-bolt>=1.18.0
 
 # For Email integration (SendGrid):
 # sendgrid>=6.10.0
 
 # For Email integration (SMTP alternative):
-# secure-smtplib>=0.1.1
+secure-smtplib>=0.1.1
 
 # For SMS integration (Twilio):
 # twilio>=8.11.0

@@ -1,0 +1,103 @@
+{
+  "complexity": {
+    "total_operations": 3,
+    "total_schemas": 4,
+    "total_dependencies": 2,
+    "circular_dependencies": 0,
+    "max_dependency_depth": 3,
+    "avg_dependency_depth": 1.75,
+    "schema_complexity_score": 0.17,
+    "operation_complexity_score": 0.08333333333333333,
+    "overall_complexity_score": 0.12666666666666668,
+    "optimization_potential": 8.333333333333334,
+    "hotspot_operations": [],
+    "unused_schemas": [
+      "UserProfile"
+    ],
+    "oversized_schemas": []
+  },
+  "recommendations": [
+    {
+      "category": "Schema Cleanup",
+      "priority": "high",
+      "operation_id": null,
+      "schema_name": null,
+      "issue": "1 unused schemas detected",
+      "impact": "Wasting 25.0% of schema space",
+      "recommendation": "Remove unused schemas to reduce API size",
+      "estimated_savings": 25.0,
+      "implementation_difficulty": "low",
+      "cli_commands": [
+        "# Remove unused schemas: UserProfile",
+        "python minify.py --input api.yaml --operations all --strip-unused --output cleaned-api.yaml"
+      ]
+    }
+  ],
+  "health_report": {
+    "overall_health_score": 90.8,
+    "health_breakdown": {
+      "complexity_health": 87.3,
+      "performance_health": 100.0,
+      "dependency_health": 100,
+      "optimization_health": 91.7,
+      "maintainability_health": 75.0
+    },
+    "complexity_analysis": {
+      "total_operations": 3,
+      "total_schemas": 4,
+      "total_dependencies": 2,
+      "circular_dependencies": 0,
+      "max_dependency_depth": 3,
+      "avg_dependency_depth": 1.75,
+      "schema_complexity_score": 0.17,
+      "operation_complexity_score": 0.08333333333333333,
+      "overall_complexity_score": 0.12666666666666668,
+      "optimization_potential": 8.333333333333334,
+      "hotspot_operations": [],
+      "unused_schemas": [
+        "UserProfile"
+      ],
+      "oversized_schemas": []
+    },
+    "performance_benchmark": {
+      "spec_size_bytes": 1851,
+      "load_time_ms": 0.00037500285543501377,
+      "parse_time_ms": 0.009209004929289222,
+      "dependency_resolution_time_ms": 0.02183399919886142,
+      "minification_time_ms": 0.0015830009942874312,
+      "memory_usage_mb": 0.002647876739501953,
+      "operations_per_second": 325768.0957970286,
+      "schemas_per_second": 183200.51968347552
+    },
+    "recommendations": [
+      {
+        "category": "Schema Cleanup",
+        "priority": "high",
+        "operation_id": null,
+        "schema_name": null,
+        "issue": "1 unused schemas detected",
+        "impact": "Wasting 25.0% of schema space",
+        "recommendation": "Remove unused schemas to reduce API size",
+        "estimated_savings": 25.0,
+        "implementation_difficulty": "low",
+        "cli_commands": [
+          "# Remove unused schemas: UserProfile",
+          "python minify.py --input api.yaml --operations all --strip-unused --output cleaned-api.yaml"
+        ]
+      }
+    ],
+    "improvement_roadmap": {
+      "immediate": [],
+      "short_term": [
+        "1 unused schemas detected: Remove unused schemas to reduce API size"
+      ],
+      "long_term": []
+    },
+    "api_statistics": {
+      "total_endpoints": 3,
+      "total_schemas": 4,
+      "dependency_ratio": 0.5,
+      "optimization_potential_percentage": 8.3
+    }
+  }
+}

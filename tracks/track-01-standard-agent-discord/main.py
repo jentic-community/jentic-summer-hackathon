@@ -6,7 +6,7 @@ from datetime import datetime
 import discord
 from discord.ext import commands
 
-STANDARD_AGENT_PATH = os.path.join(os.path.dirname(__file__), "standard-agent")
+STANDARD_AGENT_PATH = os.path.join(os.path.dirname(__file__), "..", "standard-agent")
 if STANDARD_AGENT_PATH not in sys.path:
     sys.path.insert(0, STANDARD_AGENT_PATH)
 

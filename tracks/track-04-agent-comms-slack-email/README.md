@@ -16,6 +16,19 @@ You'll create your own communication integrations that:
 
 **Your deliverable**: A working system where users can interact with your Standard Agent through their preferred communication channel.
 
+## Current Implementation Status
+
+### ✅ Slack Integration (COMPLETED)
+- **Full Slack Bot**: Complete implementation with Socket Mode for real-time events
+- **Standard Agent Integration**: Direct integration with ReWOO Standard Agent
+- **Event Handling**: Supports mentions and direct messages
+- **Conversation Context**: Maintains conversation history per user
+- **Message Formatting**: Proper Slack formatting with truncation and styling
+- **Error Handling**: Comprehensive error handling and user feedback
+
+### 🔄 Email Integration (IN PROGRESS)
+- Basic structure created, needs implementation
+
 ## Prerequisites
 
 ### Technical Requirements
@@ -38,288 +51,308 @@ You'll create your own communication integrations that:
 
 ### 1. Environment Setup
 ```bash
-# Create project directory
-mkdir agent-comms-project
-cd agent-comms-project
+# Navigate to the track directory
+cd tracks/track-04-agent-comms-slack-email
 
 # Set up Python environment
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-# Install starter dependencies
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Choose Your Platform
+### 2. Slack Setup (Required for current implementation)
 
-Pick **one platform** to focus on initially (you can add more later):
-
-**Option A: Slack** (Recommended for beginners)
-- Good for: Real-time interaction, rich formatting, team environments
-- Complexity: Medium
-- Setup time: ~45 minutes
-
-**Option B: Email** 
-- Good for: Formal communications, detailed responses, asynchronous interaction
-- Complexity: Medium
-- Setup time: ~30 minutes
-
-**Option C: SMS**
-- Good for: Urgent notifications, simple interactions, mobile-first users
-- Complexity: Lower
-- Setup time: ~20 minutes
-
-### 3. Set Up Your Chosen Platform
-
-#### For Slack:
+#### Step 1: Create a Slack App
 1. Go to [api.slack.com/apps](https://api.slack.com/apps)
-2. Create a new app → "From scratch"
-3. Configure basic bot permissions:
+2. Click "Create New App" → "From scratch"
+3. Name your app (e.g., "AI Assistant Bot")
+4. Select your workspace
+
+#### Step 2: Configure Bot Permissions
+1. Go to "OAuth & Permissions" in the sidebar
+2. Under "Scopes" → "Bot Token Scopes", add:
    - `chat:write` - Send messages
    - `channels:read` - Read channel info
    - `app_mentions:read` - Handle mentions
-4. Install to your workspace
-5. Copy the Bot User OAuth Token
+   - `im:read` - Read direct messages
+   - `im:write` - Send direct messages
+   - `im:history` - Read direct message history
 
-#### For Email:
-1. **Option A**: Set up SendGrid account (recommended)
-   - Get API key from SendGrid
-2. **Option B**: Use Gmail with app password
-   - Enable 2FA and create app password
-   - Note: SMTP settings needed
+#### Step 3: Enable Socket Mode
+1. Go to "Socket Mode" in the sidebar
+2. Enable Socket Mode
+3. Create an app-level token (save this as `SLACK_APP_TOKEN`)
 
-#### For SMS:
-1. Create Twilio account
-2. Get Account SID and Auth Token
-3. Get a Twilio phone number (trial is fine)
+#### Step 4: Subscribe to Events
+1. Go to "Event Subscriptions" in the sidebar
+2. Enable Events
+3. Subscribe to bot events:
+   - `app_mention` - When someone mentions your bot
+   - `message.im` - When someone sends a direct message
 
-### 4. Configure Environment
+#### Step 5: Install to Workspace
+1. Go to "OAuth & Permissions"
+2. Click "Install to Workspace"
+3. Copy the "Bot User OAuth Token" (save as `SLACK_BOT_TOKEN`)
+
+### 3. Environment Configuration
 ```bash
-# Copy the example environment file
+# Create .env file
 cp .env.example .env
 
-# Edit .env with your credentials
-# Add only the credentials for your chosen platform
+# Edit .env with your credentials:
+SLACK_BOT_TOKEN=xoxb-your-bot-token-here
+SLACK_APP_TOKEN=xapp-your-app-token-here
+SLACK_DEFAULT_CHANNEL=C1234567890  # Optional: for testing
+
+# Standard Agent configuration
+LLM_MODEL=claude-3-sonnet-20240229  # Optional: defaults to this
+ANTHROPIC_API_KEY=your-anthropic-key  # Required for Standard Agent
+JENTIC_API_KEY=your-jentic-key  # Optional: for additional tools
 ```
 
-## Your Implementation Tasks
+## Usage
 
-### Phase 1: Basic Integration (90 minutes)
+### Testing the Implementation
 
-#### Task 1: Create Your Communication Class
-Build a class that can:
-- Connect to your chosen platform
-- Send a simple message
-- Handle basic errors
+#### 1. Test Connection and Standard Agent
+```bash
+python demo.py test
+```
+This will:
+- Test Slack connection
+- Verify Standard Agent initialization
+- Run a test query through the Standard Agent
 
-**Deliverable**: A working class that can send "Hello World" messages.
+#### 2. List Available Channels
+```bash
+python demo.py channels
+```
+Shows all channels your bot can access.
 
-**Files to create/modify**:
-- `integrations/my_platform_agent.py` (implement your communication logic)
-- Test it with the provided skeleton
+#### 3. Send Test Message
+```bash
+python demo.py send
+```
+Sends a test message to your default channel (requires `SLACK_DEFAULT_CHANNEL` in .env).
 
-#### Task 2: Connect Standard Agent
-Integrate your communication class with Standard Agent:
-- Accept user queries through your platform
-- Process them with Standard Agent
-- Send responses back
+#### 4. Run the Full Bot
+```bash
+python demo.py run
+```
+Starts the bot in Socket Mode. The bot will:
+- Listen for mentions in channels
+- Respond to direct messages
+- Process queries through the Standard Agent
+- Maintain conversation context
 
-**Deliverable**: Users can ask your agent questions and get intelligent responses.
+### Using the Bot
 
-### Phase 2: Enhanced Features (90-120 minutes)
-
-#### Task 3: Improve User Experience
-Add features like:
-- **Message formatting** appropriate for your platform
-- **Error handling** with helpful user messages
-- **Typing indicators** or progress feedback
-- **Command parsing** (for platforms that support it)
-
-#### Task 4: Smart Response Handling
-Implement:
-- **Response length management** (truncate for SMS, paginate for long responses)
-- **Context awareness** (remember conversation history)
-- **Different response types** (quick answers vs detailed explanations)
-
-### Phase 3: Advanced Features (Optional, 60+ minutes)
-
-#### Task 5: Multi-Channel or Advanced Features
-Choose one:
-- **Add a second platform** and create a unified interface
-- **Interactive elements** (buttons, forms, etc. if platform supports)
-- **Conversation flows** with follow-up questions
-- **User preferences** and personalization
-
-## Provided Starter Code
-
-### Communication Interface Template
-```python
-# integrations/base_agent.py - Interface your agent should implement
-class BaseCommunicationAgent:
-    def __init__(self):
-        # TODO: Initialize your platform connection
-        pass
-    
-    def test_connection(self) -> bool:
-        # TODO: Test if platform is reachable
-        pass
-    
-    def send_message(self, recipient: str, message: str) -> dict:
-        # TODO: Send message to recipient
-        pass
-    
-    def process_agent_query(self, query: str, user_context: dict) -> str:
-        # TODO: Use Standard Agent to process query
-        pass
+#### In Channels
+Mention your bot to interact:
+```
+@your-bot What's the weather in Paris?
+@your-bot Can you help me with a math problem?
 ```
 
-### Testing Framework
-```python
-# test_integration.py - Test your implementation
-def test_platform_connection():
-    # TODO: Verify platform connectivity
-    pass
-
-def test_agent_integration():
-    # TODO: Test Standard Agent integration
-    pass
-
-def test_message_formatting():
-    # TODO: Test message formatting
-    pass
+#### Direct Messages
+Send direct messages to your bot for private conversations:
+```
+What's 2 + 2?
+Tell me a joke
+Help me plan my day
 ```
 
-### Example Usage
-```python
-# examples/demo.py - Shows how your agent should work
-def demo_conversation():
-    # User: "What's the weather in Paris?"
-    # Agent: Processes query → Gets weather → Formats response → Sends via platform
-    pass
+## Implementation Details
+
+### Slack Agent Features
+
+#### 1. Real-time Event Handling
+- **Socket Mode**: Uses Slack's Socket Mode for real-time communication
+- **Event Types**: Handles mentions and direct messages
+- **Async Processing**: Non-blocking event processing
+
+#### 2. Standard Agent Integration
+- **ReWOO Agent**: Uses the ReWOO reasoning methodology
+- **Tool Access**: Has access to 1500+ tools via Jentic
+- **Conversation Memory**: Maintains context across interactions
+
+#### 3. Conversation Management
+- **User Context**: Tracks conversation history per user
+- **Memory Management**: Keeps last 10 interactions per user
+- **Context Preservation**: Maintains conversation flow
+
+#### 4. Message Formatting
+- **Slack Optimization**: Proper formatting for Slack
+- **Length Limits**: Handles message truncation
+- **Rich Formatting**: Supports bold, bullet points, etc.
+
+### Code Structure
+
+```
+track-04-agent-comms-slack-email/
+├── slack_agent.py          # Main Slack bot implementation
+├── base_agent.py           # Base interface for communication agents
+├── demo.py                 # Testing and demo utilities
+├── email_integration.py    # Email integration (to be implemented)
+├── requirements.txt        # Python dependencies
+└── README.md              # This file
 ```
 
-## Implementation Guidance
+### Key Classes
 
-### For Slack Implementers
-**Key challenges to solve**:
-- Event handling for mentions and DMs
-- Slack's block-based message formatting
-- Managing conversation threads
-- Handling rate limits
+#### `SlackAgent`
+- **Inherits from**: `BaseCommunicationAgent`
+- **Features**:
+  - Socket Mode event handling
+  - Standard Agent integration
+  - Conversation context management
+  - Message formatting
 
-**Hints**:
-- Use `slack-sdk` library
-- Implement webhook endpoint for events
-- Study Slack Block Kit for rich messages
-
-### For Email Implementers  
-**Key challenges to solve**:
-- HTML vs plain text formatting
-- Email threading for conversations
-- Attachment handling
-- SMTP vs API-based sending
-
-**Hints**:
-- Consider SendGrid for simplicity
-- Use email templates for consistent formatting
-- Implement subject line generation
-
-### For SMS Implementers
-**Key challenges to solve**:
-- 160 character message limits
-- Conversation context without threading
-- Number formatting and validation
-- Cost management
-
-**Hints**:
-- Implement smart truncation
-- Use conversation state tracking
-- Consider message splitting for long responses
+#### `BaseCommunicationAgent`
+- **Purpose**: Abstract interface for communication platforms
+- **Methods**:
+  - `test_connection()`: Verify platform connectivity
+  - `send_message()`: Send messages to recipients
+  - `process_agent_query()`: Process queries with Standard Agent
 
 ## Testing Your Implementation
 
 ### Basic Tests
 ```bash
-# Test platform connectivity
-python -c "from integrations.my_agent import MyAgent; agent = MyAgent(); print(agent.test_connection())"
+# Test connection and Standard Agent
+python demo.py test
 
-# Test message sending
-python -c "from integrations.my_agent import MyAgent; agent = MyAgent(); agent.send_message('test-recipient', 'Hello!')"
+# List available channels
+python demo.py channels
 
-# Test agent integration
-python examples/demo.py
+# Send test message
+python demo.py send
+
+# Run full bot
+python demo.py run
 ```
 
-### Integration Tests
-Your implementation should pass these scenarios:
-1. **Simple Q&A**: User asks "What is 2+2?" → Agent responds correctly
-2. **Complex Query**: User asks research question → Agent uses tools and responds
-3. **Error Handling**: Invalid input → Agent responds helpfully
-4. **Long Response**: Agent response > platform limit → Handled gracefully
+### Manual Testing
+1. **Start the bot**: `python demo.py run`
+2. **Mention in channel**: `@your-bot Hello!`
+3. **Send DM**: Direct message your bot
+4. **Test complex queries**: Ask questions that require tools
 
-## Deliverables
+### Expected Behaviors
+1. **Simple Q&A**: "What is 2+2?" → Correct mathematical answer
+2. **Tool Usage**: "What's the weather?" → Uses weather tools
+3. **Conversation**: Follow-up questions maintain context
+4. **Error Handling**: Graceful handling of invalid inputs
 
-### Minimum Viable Product
-- [ ] **Working platform integration** that can send/receive messages
-- [ ] **Standard Agent connection** that processes queries
-- [ ] **Basic error handling** with user-friendly messages
-- [ ] **Demo script** showing the system in action
-- [ ] **README** with setup and usage instructions
+## Troubleshooting
 
-### Enhanced Implementation
-- [ ] **Rich message formatting** using platform-specific features
-- [ ] **Conversation context** management
-- [ ] **Multiple message types** (quick answers, detailed responses, errors)
-- [ ] **User experience optimizations** (typing indicators, progress updates)
+### Common Issues
 
-### Advanced Implementation
-- [ ] **Multi-platform support** or **advanced platform features**
-- [ ] **Interactive elements** (buttons, forms, etc.)
-- [ ] **Conversation flows** with follow-up questions
-- [ ] **Performance optimizations** and **scalability considerations**
+#### 1. Connection Failures
+```
+❌ SLACK_BOT_TOKEN not set
+❌ SLACK_APP_TOKEN not set
+❌ Failed to connect to Slack
+```
+**Solution**: Verify your tokens in the .env file
+
+#### 2. Standard Agent Issues
+```
+❌ Standard Agent is not available
+❌ Failed to initialize Standard Agent
+```
+**Solution**: Check your `ANTHROPIC_API_KEY` and `LLM_MODEL` settings
+
+#### 3. Permission Errors
+```
+❌ Missing required scopes
+❌ Bot not installed to workspace
+```
+**Solution**: Verify bot permissions and workspace installation
+
+#### 4. Event Handling Issues
+```
+❌ Bot not responding to mentions
+❌ Direct messages not working
+```
+**Solution**: Check Event Subscriptions and Socket Mode setup
+
+### Debug Mode
+Enable debug logging by setting:
+```bash
+export PYTHONPATH="${PYTHONPATH}:../standard-agent"
+python -u demo.py run
+```
+
+## Extension Ideas
+
+### For Slack Implementation
+- **Interactive Elements**: Add buttons, dropdowns, and forms
+- **File Uploads**: Handle file attachments and processing
+- **Thread Support**: Respond in threads for better organization
+- **Rich Messages**: Use Slack Block Kit for rich formatting
+- **User Preferences**: Store user preferences and settings
+
+### For Email Implementation
+- **HTML Templates**: Create beautiful email templates
+- **Attachment Handling**: Process email attachments
+- **Threading**: Maintain email conversation threads
+- **Scheduling**: Send scheduled responses
+- **Signature Management**: Professional email signatures
+
+### General Enhancements
+- **Multi-platform Support**: Unified interface for multiple platforms
+- **Analytics**: Track usage and performance metrics
+- **Admin Interface**: Web interface for bot management
+- **Plugin System**: Extensible architecture for new features
+- **Rate Limiting**: Smart rate limiting and queuing
 
 ## Success Criteria
 
 Your implementation succeeds when:
-1. **Users can naturally interact** with Standard Agent through your platform
-2. **Responses are well-formatted** and appropriate for the platform
+1. **Users can naturally interact** with Standard Agent through Slack
+2. **Responses are well-formatted** and appropriate for Slack
 3. **Error cases are handled gracefully** with helpful feedback
 4. **The system is reliable** and doesn't crash on edge cases
 5. **Setup instructions are clear** and others can run your code
+6. **Conversation context is maintained** across multiple interactions
 
 ## Getting Help
 
 ### Quick Debugging
 ```bash
 # Test environment setup
-python test_environment.py
+python demo.py test
 
-# Test Standard Agent
-python test_agent.py
+# Check channels
+python demo.py channels
 
-# Test your integration
-python test_integration.py
+# Test message sending
+python demo.py send
 ```
 
-### Common Issues
-- **Authentication failures**: Double-check API keys and permissions
-- **Message formatting**: Study platform documentation for formatting rules
-- **Rate limiting**: Implement backoff and respect platform limits
-- **Agent integration**: Ensure Standard Agent is properly initialized
-
-### Support
+### Support Resources
 - **Discord**: #summer-hackathon for real-time help
-- **Platform docs**: Each platform has extensive API documentation
+- **Slack API Docs**: [api.slack.com](https://api.slack.com)
 - **Standard Agent**: See Track 01 for integration patterns
+- **Socket Mode**: [Socket Mode Guide](https://api.slack.com/apis/connections/socket)
 
-## Extension Ideas
+## Next Steps
 
-Once you have a working basic implementation:
-- **Add conversation memory** across multiple interactions
-- **Implement user preferences** (response length, formality level)
-- **Create specialized commands** for common tasks
-- **Add approval workflows** for sensitive operations
-- **Build admin/monitoring interfaces**
-- **Integrate with other services** (calendars, databases, etc.)
+### Immediate Tasks
+1. **Test the current implementation** with your Slack workspace
+2. **Customize the bot** for your specific use case
+3. **Add error handling** for edge cases
+4. **Implement email integration** following the same pattern
+
+### Advanced Features
+1. **Add interactive elements** (buttons, forms)
+2. **Implement user preferences** and settings
+3. **Create admin interface** for bot management
+4. **Add analytics** and monitoring
+5. **Support multiple platforms** simultaneously
 
 Remember: **Start simple**, get it working, then enhance. The goal is to create a useful bridge between humans and AI agents!

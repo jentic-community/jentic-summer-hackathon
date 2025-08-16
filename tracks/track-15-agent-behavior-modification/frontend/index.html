@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Behavior Modification System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <h1>Agent Behavior Control</h1>
+                </div>
+                <div class="user-info">
+                    <span id="current-user">Admin User</span>
+                    <button class="btn-secondary" onclick="changeUser()">
+                        <i class="fas fa-user-edit"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Overview -->
+            <section class="dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="active-policies-count">0</h3>
+                            <p>Active Policies</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="recent-actions">0</h3>
+                            <p>Recent Actions</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="blocked-actions">0</h3>
+                            <p>Blocked Actions</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="allowed-actions">0</h3>
+                            <p>Allowed Actions</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="showModal('test-goal')">
+                        <i class="fas fa-play"></i>
+                        Test Agent Goal
+                    </button>
+                    <button class="btn-primary" onclick="showModal('add-policy')">
+                        <i class="fas fa-plus"></i>
+                        Add Policy
+                    </button>
+                    <button class="btn-secondary" onclick="showModal('natural-language')">
+                        <i class="fas fa-comment"></i>
+                        Natural Language
+                    </button>
+                    <button class="btn-secondary" onclick="showModal('demo-scenarios')">
+                        <i class="fas fa-flask"></i>
+                        Run Demos
+                    </button>
+                </div>
+            </section>
+
+            <!-- Main Content Tabs -->
+            <section class="content-tabs">
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="switchTab('policies')">
+                        <i class="fas fa-shield-alt"></i>
+                        Active Policies
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('audit')">
+                        <i class="fas fa-history"></i>
+                        Audit Log
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('agent')">
+                        <i class="fas fa-robot"></i>
+                        Agent Status
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('analytics')">
+                        <i class="fas fa-chart-bar"></i>
+                        Analytics
+                    </button>
+                </div>
+
+                <!-- Policies Tab -->
+                <div id="policies-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <h2>Active Policies</h2>
+                        <button class="btn-primary" onclick="showModal('add-policy')">
+                            <i class="fas fa-plus"></i>
+                            Add Policy
+                        </button>
+                    </div>
+                    <div id="policies-list" class="policies-grid">
+                        <!-- Policies will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Audit Log Tab -->
+                <div id="audit-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Audit Log</h2>
+                        <div class="audit-filters">
+                            <select id="audit-filter" onchange="filterAuditLog()">
+                                <option value="all">All Actions</option>
+                                <option value="blocked">Blocked Only</option>
+                                <option value="allowed">Allowed Only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="audit-log" class="audit-list">
+                        <!-- Audit entries will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Agent Status Tab -->
+                <div id="agent-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Agent Status</h2>
+                        <button class="btn-primary" onclick="testAgentGoal()">
+                            <i class="fas fa-play"></i>
+                            Test Goal
+                        </button>
+                    </div>
+                    <div class="agent-status-grid">
+                        <div class="status-card">
+                            <h3>Current Status</h3>
+                            <div id="agent-status-content">
+                                <!-- Agent status will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="status-card">
+                            <h3>Recent Goals</h3>
+                            <div id="recent-goals">
+                                <!-- Recent goals will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analytics-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Analytics</h2>
+                        <div class="time-filter">
+                            <select id="time-range" onchange="updateAnalytics()">
+                                <option value="24h">Last 24 Hours</option>
+                                <option value="7d">Last 7 Days</option>
+                                <option value="30d">Last 30 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="analytics-grid">
+                        <div class="chart-card">
+                            <h3>Action Distribution</h3>
+                            <canvas id="action-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Policy Effectiveness</h3>
+                            <canvas id="policy-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    
+    <!-- Test Goal Modal -->
+    <div id="test-goal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Test Agent Goal</h2>
+                <button class="close-btn" onclick="closeModal('test-goal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="goal-input">Enter a goal for the agent:</label>
+                    <textarea id="goal-input" placeholder="e.g., Send an email to the team, Analyze this document, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Current User:</label>
+                    <span id="modal-user">Admin User</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('test-goal')">Cancel</button>
+                <button class="btn-primary" onclick="submitGoal()">
+                    <i class="fas fa-play"></i>
+                    Test Goal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Policy Modal -->
+    <div id="add-policy-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Policy</h2>
+                <button class="close-btn" onclick="closeModal('add-policy')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="policy-type-selector">
+                    <button class="policy-type-btn active" onclick="selectPolicyType('time')">
+                        <i class="fas fa-clock"></i>
+                        Time-based
+                    </button>
+                    <button class="policy-type-btn" onclick="selectPolicyType('user')">
+                        <i class="fas fa-user"></i>
+                        User-based
+                    </button>
+                    <button class="policy-type-btn" onclick="selectPolicyType('action')">
+                        <i class="fas fa-ban"></i>
+                        Action-based
+                    </button>
+                    <button class="policy-type-btn" onclick="selectPolicyType('content')">
+                        <i class="fas fa-filter"></i>
+                        Content-based
+                    </button>
+                </div>
+                
+                <div id="policy-form" class="policy-form">
+                    <!-- Policy form will be dynamically generated -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('add-policy')">Cancel</button>
+                <button class="btn-primary" onclick="submitPolicy()">
+                    <i class="fas fa-plus"></i>
+                    Add Policy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Natural Language Modal -->
+    <div id="natural-language-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Natural Language Policy</h2>
+                <button class="close-btn" onclick="closeModal('natural-language')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nl-input">Describe the behavior modification you want:</label>
+                    <textarea id="nl-input" placeholder="e.g., Block all email sending operations, Only allow file operations during business hours, Prevent deletion of important files, etc."></textarea>
+                </div>
+                <div class="examples">
+                    <h4>Examples:</h4>
+                    <ul>
+                        <li>"Block all email sending operations"</li>
+                        <li>"Only allow operations during business hours"</li>
+                        <li>"Prevent deletion of files in the /important/ folder"</li>
+                        <li>"Block users with role 'guest' from accessing sensitive data"</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('natural-language')">Cancel</button>
+                <button class="btn-primary" onclick="submitNaturalLanguage()">
+                    <i class="fas fa-magic"></i>
+                    Create Policy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Scenarios Modal -->
+    <div id="demo-scenarios-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Demo Scenarios</h2>
+                <button class="close-btn" onclick="closeModal('demo-scenarios')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="demo-scenarios">
+                    <div class="demo-card" onclick="runDemo('basic')">
+                        <h3>Basic Behavior Modification</h3>
+                        <p>Time-based, user-based, and action-based restrictions</p>
+                    </div>
+                    <div class="demo-card" onclick="runDemo('security')">
+                        <h3>Security Level Demo</h3>
+                        <p>Different security levels and their effects</p>
+                    </div>
+                    <div class="demo-card" onclick="runDemo('conflicts')">
+                        <h3>Policy Conflicts</h3>
+                        <p>How the system handles conflicting policies</p>
+                    </div>
+                    <div class="demo-card" onclick="runDemo('content')">
+                        <h3>Content Filtering</h3>
+                        <p>Pattern-based content restrictions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('demo-scenarios')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

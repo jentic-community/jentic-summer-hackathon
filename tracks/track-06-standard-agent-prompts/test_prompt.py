@@ -14,7 +14,7 @@ def test_single_prompt(prompt_text, timeout=120):
     try:
         # Import and initialize agent
         import sys
-        sys.path.append('standard-agent')
+        sys.path.append('../standard-agent')
         
         # Fix LiteLLM parameter compatibility
         import litellm

@@ -29,7 +29,7 @@ def check_standard_agent():
     
     try:
         import sys
-        sys.path.append('standard-agent')
+        sys.path.append('../standard-agent')
         from agents.prebuilt import ReWOOAgent
         
         model = os.getenv('LLM_MODEL', 'gpt-4')
@@ -52,7 +52,7 @@ def check_jentic_access():
     
     try:
         import sys
-        sys.path.append('standard-agent')
+        sys.path.append('../standard-agent')
         from agents.tools.jentic import JenticClient
         
         # Test that we can create a client (this uses the API key)

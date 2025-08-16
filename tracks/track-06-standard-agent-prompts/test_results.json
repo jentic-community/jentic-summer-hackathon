@@ -42,5 +42,25 @@
     "tool_calls": 0,
     "model": "gpt-4",
     "timestamp": 1755351788.6745338
+  },
+  {
+    "prompt": "Whats the weather in San Francisco",
+    "success": false,
+    "error": "No module named 'agents'"
+  },
+  {
+    "prompt": "Whats the weather in San Francisco",
+    "success": false,
+    "error": "No module named 'agents'"
+  },
+  {
+    "prompt": "Whats the weather in San Francisco",
+    "success": true,
+    "execution_time": 33.836143255233765,
+    "result": "I'm sorry for the inconvenience, but I'm unable to provide the current weather for San Francisco at the moment. Please try again later or use a search engine such as Google or a weather forecast site like Weather.com to find this information directly. I'm here to assist with any other queries you may have.",
+    "iterations": 6,
+    "tool_calls": 0,
+    "model": "gpt-4",
+    "timestamp": 1755353377.5520713
   }
 ]
