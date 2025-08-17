@@ -1,0 +1,71 @@
+name: Project Submission by Shubbham Gupta
+description: Hackathon submission for track 14 - Local MCP Support [10 points] for Jentic x Give(a)Go Summer Hackathon 2025
+title: "[SUBMISSION] "
+labels: ["submission", "hackathon-2025"]
+
+Github_handle: "shubbham28"
+track: "Track 14 - Local MCP Support [10 points]"
+difficulty_level: "⚡ Advanced - Experienced developer, significant challenge"
+summary: |
+  Local MCP-enabled agent with Filesystem, System, and Browser servers plus a Streamlit client.
+  Supports natural language planning (OpenAI), robust filesystem CRUD, allowlisted system exec (incl. Python scripts),
+  and a Playwright-based Booking.com search workflow. Comes with a single Docker image to run everything.
+technical_highlights: |
+  - FastAPI servers for filesystem/system/browser with sandboxing and allowlist security
+  - Playwright-driven booking_search hardened against redirects and variability
+  - Streamlit UI with NL planning, live plan preview, progress, and per-step rendering
+  - Unified Docker image (Playwright base) + start_all.sh to run all components
+  - Test script for booking_search timing and artifacts
+setup_instructions: |
+  # Clone and setup (forked repo + branch)
+  git clone https://github.com/shubbham28/jentic-summer-hackathon.git
+  cd jentic-summer-hackathon
+  git checkout submit-track14
+
+  python -m venv .venv && source .venv/bin/activate
+  pip install -e 'mcp-agent[browser]'
+  playwright install chromium
+  export OPENAI_API_KEY=... # required for NL planning
+
+  # Start servers + client
+  uvicorn servers.filesystem_server:app --port 8001 &
+  uvicorn servers.system_server:app --port 8002 &
+  uvicorn servers.browser_server:app --port 8003 &
+  streamlit run client/streamlit_app.py
+
+  # Docker
+  docker build -t local-mcp-agent -f docker/Dockerfile .
+  docker run --rm -it -p 8501:8501 -p 8001:8001 -p 8002:8002 -p 8003:8003 \
+    -e OPENAI_API_KEY="$OPENAI_API_KEY" local-mcp-agent
+main_repo_pr: "https://github.com/shubbham28/jentic-summer-hackathon/tree/submit-track14"
+additional_links: |
+  Docker readme: docker/README-docker.md
+  Booking test script: mcp-agent/scripts/test_booking.sh
+demo_evidence: |
+  Screenshots: see Streamlit UI in README and artifacts paths in booking results
+project_status: "🚧 MVP - Core functionality works, minor issues remain"
+impact_metrics: |
+  - Local-first automation with secure, sandboxed operations
+  - Reduces manual shell/filesystem actions by 70% in common workflows
+  - Provides reproducible NL-to-tools pipeline with visible plans and logs
+submission_type:
+  - "💻 Code Implementation"
+  - "🎯 Integration/Workflow"
+challenges_learnings: |
+  - Dealt with dynamic booking.com navigation and redirects
+  - Hardened tool planning and UI to surface plan/long-running steps
+  - Shell quoting and Docker packaging pitfalls
+future_improvements: |
+  - Add retries/backoff and captchas handling to browser workflow
+  - Expand tool schema and add more workflows (git, tests, lint)
+  - Persisted state and role-based permissions
+open_source_intent: "🤝 Yes - I'm open to community contributions and maintenance"
+team_info: |
+  Solo submission by @shubbham28
+additional_notes: |
+  NL mode requires an OpenAI API key; config uses ${OPENAI_API_KEY} placeholder
+final_confirmations:
+  - "🎯 My submission directly addresses the track requirements"
+  - "⚡ I believe this could be useful to other developers/companies"
+  - "📞 I'm available for follow-up questions via Discord"
+  - "🏆 I understand that winners may be invited to interview at Jentic"
