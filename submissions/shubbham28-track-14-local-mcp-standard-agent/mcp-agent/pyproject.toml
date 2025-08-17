@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-agent"
+version = "0.1.0"
+description = "Local MCP-enabled agent scaffold"
+requires-python = ">=3.9"
+dependencies = [
+  "fastapi>=0.110,<1.0",
+  "uvicorn[standard]>=0.23,<1.0",
+  "requests>=2.31",
+  "openai>=1.30.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+browser = [
+  "playwright>=1.44",
+]
+
+[tool.setuptools]
+# Use explicit discovery to avoid accidental inclusion of non-packages
+
+[tool.setuptools.packages.find]
+include = ["servers*", "client*"]
+exclude = ["tests*", "artifacts*", "docker*", "configs*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+exclude = '''
+/(
+  \.git
+ | \.venv
+ | \.mypy_cache
+ | \.ruff_cache
+ | build
+ | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+combine_as_imports = true
+skip_gitignore = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "PL", "RUF"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+xfail_strict = true
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true

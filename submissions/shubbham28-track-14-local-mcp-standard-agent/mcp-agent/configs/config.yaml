@@ -1,0 +1,15 @@
+# TODO: Base configuration for the MCP agent.
+agent:
+  name: "mcp-agent"
+  env: "local"
+
+logging:
+  level: "INFO"
+
+security:
+  # TODO: add permissions, sandboxing, and allowed paths
+
+openai:
+  api_key: ${OPENAI_API_KEY}
+  model: gpt-3.5-turbo
+  temperature: 0.0

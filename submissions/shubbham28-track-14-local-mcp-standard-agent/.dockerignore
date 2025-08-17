@@ -1,0 +1,45 @@
+# VCS
+.git
+.gitignore
+
+# Python caches
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info
+.eggs
+
+# Virtual envs
+.venv
+venv
+env
+ENV
+
+# Build / dist
+build
+dist
+
+# OS / Editor
+.DS_Store
+.vscode
+.idea
+
+# Tool caches
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.ipynb_checkpoints
+
+# Project artifacts & local debug
+mcp-agent/artifacts
+mcp-agent/debug_booking
+playwright/.cache
+
+# Logs
+*.log
+logs
+
+# Streamlit
+.streamlit
