@@ -1,0 +1,13 @@
+# TODO: Declare local MCP servers and capabilities.
+servers:
+  - name: filesystem
+    enabled: true
+    config: {}
+  - name: system
+    enabled: true
+    config: {}
+  - name: browser
+    enabled: true
+    config: {}
+
+# Extend with authentication and permissions as needed.
