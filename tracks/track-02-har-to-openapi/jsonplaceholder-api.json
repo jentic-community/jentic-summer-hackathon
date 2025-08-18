@@ -1,0 +1,129 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Discovered API",
+    "description": "API specification reverse-engineered from HAR analysis",
+    "version": "1.0.0",
+    "x-jentic-source-url": "https://jsonplaceholder.typicode.com"
+  },
+  "servers": [
+    {
+      "url": "https://jsonplaceholder.typicode.com",
+      "description": "API server discovered from HAR analysis"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "summary": "GET /posts",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /posts",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "summary": "GET /posts/{id}",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "PUT /posts/{id}",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /posts/{id}",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "GET /users",
+        "description": "Endpoint discovered from HAR analysis (1 calls observed)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Response schema to be defined based on actual responses"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  }
+}
