@@ -1,0 +1,98 @@
+arazzo: 1.0.0
+info:
+  title: JSONPlaceholder API Test Workflow
+  description: Test workflow for the JSONPlaceholder API discovered from HAR analysis
+  version: 1.0.0
+
+workflows:
+  - workflowId: testJSONPlaceholderAPI
+    description: Test the main functionality of the JSONPlaceholder API
+    inputs:
+      type: object
+      properties:
+        test_post_title:
+          type: string
+          description: Title for test post creation
+          default: "Test Post from HAR Discovery"
+        test_post_body:
+          type: string
+          description: Body content for test post
+          default: "This post was created to test the API discovered through HAR analysis"
+        test_user_id:
+          type: integer
+          description: User ID for test operations
+          default: 1
+    
+    steps:
+      - stepId: getAllPosts
+        description: Test getting all posts
+        operationRef: 'jsonplaceholder-api.yaml#/operations/getAllPosts'
+        outputs:
+          all_posts: $response.body
+          total_posts: $response.body.length
+          first_post_id: $response.body[0].id
+          first_post_title: $response.body[0].title
+
+      - stepId: getSpecificPost
+        description: Get details for the first post from the list
+        operationRef: 'jsonplaceholder-api.yaml#/operations/getPostById'
+        parameters:
+          id: $steps.getAllPosts.outputs.first_post_id
+        dependsOn: [getAllPosts]
+        condition: $steps.getAllPosts.outputs.total_posts > 0
+        outputs:
+          post_details: $response.body
+          post_user_id: $response.body.userId
+
+      - stepId: getAllUsers
+        description: Test getting all users
+        operationRef: 'jsonplaceholder-api.yaml#/operations/getAllUsers'
+        outputs:
+          all_users: $response.body
+          total_users: $response.body.length
+          first_user: $response.body[0]
+
+      - stepId: createNewPost
+        description: Test creating a new post
+        operationRef: 'jsonplaceholder-api.yaml#/operations/createPost'
+        parameters:
+          title: $inputs.test_post_title
+          body: $inputs.test_post_body
+          userId: $inputs.test_user_id
+        outputs:
+          created_post: $response.body
+          created_post_id: $response.body.id
+
+      - stepId: updatePost
+        description: Test updating the created post
+        operationRef: 'jsonplaceholder-api.yaml#/operations/updatePost'
+        parameters:
+          id: $steps.createNewPost.outputs.created_post_id
+          id_in_body: $steps.createNewPost.outputs.created_post_id
+          title: "Updated: $inputs.test_post_title"
+          body: "Updated: $inputs.test_post_body"
+          userId: $inputs.test_user_id
+        dependsOn: [createNewPost]
+        outputs:
+          updated_post: $response.body
+
+      - stepId: deletePost
+        description: Test deleting the created post
+        operationRef: 'jsonplaceholder-api.yaml#/operations/deletePost'
+        parameters:
+          id: $steps.createNewPost.outputs.created_post_id
+        dependsOn: [updatePost]
+        outputs:
+          delete_response: $response.body
+
+      - stepId: verifyDeletion
+        description: Verify the post was deleted (should return 404 or empty)
+        operationRef: 'jsonplaceholder-api.yaml#/operations/getPostById'
+        parameters:
+          id: $steps.createNewPost.outputs.created_post_id
+        dependsOn: [deletePost]
+        outputs:
+          verification_response: $response.body
+          verification_status: $response.status
+
+operations: []  # Operations are referenced from the main API spec file

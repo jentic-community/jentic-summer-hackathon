@@ -1,0 +1,11 @@
+arazzo: 1.0.0
+info: {title: Test, version: 1.0.0}
+workflows:
+  - workflowId: test
+    steps:
+      - stepId: ping
+        operationRef: "#/operations/ping"
+operations:
+  - operationId: ping
+    method: GET
+    url: https://httpbin.org/get
